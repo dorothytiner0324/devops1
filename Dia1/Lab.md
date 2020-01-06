@@ -535,7 +535,9 @@ Entramos en el contendor:
 Y ahora, vamos a realizar 2 acciones, primero, crear un usuario: **devuser** y como segundo paso, crear un password para **root**. 
 
 > useradd -d /home/devuser -m devuser
+
 > passwd devuser 
+
 > passwd root 
 
 Acto siguiente desde la consola, vamos a activar el plugin de SSH y realizar la configuracion del contenedor que hemos creado.
@@ -609,7 +611,3 @@ OBS.
 * devuser
 * root 
 2. Configurar las credenciales para los usuarios mencionados en jenkins. 
-
-
-
-
