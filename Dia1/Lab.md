@@ -482,3 +482,134 @@ Y en la ejecución:
 
 ![job](https://github.com/kdetony/devops/blob/master/Images/salida5.png "Job")
 
+
+### Jenkins hacia un Contenedor 
+
+Nos conectamos a nuestro servidor Docker y en la ruta: /home/docker, vamos a crear la carpeta **app** ( dentro la carpeta app crearemos nuestro archivo Dockerfile )
+
+Dockerfile
+```
+RUN yum -y install openssh-server net-tools
+
+RUN useradd devuser && \
+    echo "devuser" | passwd devuser  --stdin && mkdir /home/devuser/.ssh && \
+    chmod 700 /home/devuser/.ssh
+
+COPY llave.pub /home/devuser/.ssh/authorized_keys
+
+RUN chown devuser:devuser  -R /home/devuser &&  chmod 600 /home/devuser/.ssh/authorized_keys
+
+RUN /usr/sbin/sshd-keygen > /dev/null 2>&1
+
+CMD /usr/sbin/sshd -D
+```
+
+docker-compose.yml
+```
+version: '3'
+services:
+  remote_host:
+    container_name: appremoto
+    image: imgapp
+    ports:
+      - "4321:22"
+    build:
+      context: app 
+    networks:
+      - net
+networks:
+  net:
+```
+
+Ejecutamos: 
+
+> docker-compose build 
+> docker-compose up -d 
+
+Lo que hará docker-compose, es crear una con imagen centos, esta imagen tendra de nombre *imgapp* y luego creará el contenedor de nombre: *appremoto*.
+
+Entramos en el contendor: 
+
+> docker exec -it appremoto bash 
+
+Y ahora, vamos a realizar 2 acciones, primero, crear un usuario: **devuser** y como segundo paso, crear un password para **root**. 
+
+> useradd -d /home/devuser -m devuser
+> passwd devuser 
+> passwd root 
+
+Acto siguiente desde la consola, vamos a activar el plugin de SSH y realizar la configuracion del contenedor que hemos creado.
+
+En el menú de Jenkins:
+
+**Administrar Jenkins/Administrar plugins**
+
+Acontinuación vamos a crear las credenciales para nuestro contendor, para ello hacemos clic en **credentials**
+
+![ssh](https://github.com/kdetony/devops/blob/master/Images/configssh.png "Config_SSH")
+
+![ssh](https://github.com/kdetony/devops/blob/master/Images/configssh1.png "Config_SSH")
+
+Bien, ahora vamos a agregar las credenciales:
+
+![ssh](https://github.com/kdetony/devops/blob/master/Images/configssh2.png "Config_SSH")
+
+Al finalizar, debemos tener esta pantalla:
+
+![ssh](https://github.com/kdetony/devops/blob/master/Images/configssh3.png "Config_SSH")
+
+Bien, Con el plugin activado y la credencial creada, vamos a configurar nuestro contenedor para que Jenkins pueda conectarse a el.
+
+**Administrar Jenkins/Configurar el Sistema**
+
+Vamos a buscar la opción: **SSH remote hosts**
+
+![ssh](https://github.com/kdetony/devops/blob/master/Images/configssh4.png "Config_SSH")
+
+Ingresamos estos datos:
+```
+* HOSTNAME: IP_PUBLICA_SERVER_DOCKER
+* Puerto: 4321
+```
+
+![ssh](https://github.com/kdetony/devops/blob/master/Images/configssh5.png "Config_SSH")
+
+Hacemos clic en el boton *Check Connection* y el resultado debe ser `"Successfull conection"`
+
+Para guardar la configuracion, nos posicionamos en la ultima parte del menu, y damos clic en "guardar"
+
+Hasta ahora, ya tenemos todo listo para ejecutar/lanzar nuestro primer JOB en nuestro contenedor, para ello, vamos a crear una tarea/job:
+```
+* Nombre Tarea: valida-tarea
+* Crear proyecto de libre estilo
+```
+
+Nos ubicamos en la opcion: *Ejecutar* y escogemos **Ejecutar shell script on remote host using ssh**:
+
+![job](https://github.com/kdetony/devops/blob/master/Images/job13.png "Job")
+
+Vamos a crear un pequeño mensaje y guardarlo en **/tmp/log.txt** en el contenedor *centos*.
+
+![job](https://github.com/kdetony/devops/blob/master/Images/salida6.png "Salida")
+
+Pues bien, vamos a ejecutar nuestro job, hacemos clic en construir ahora
+
+Y validamos nuestro job:
+
+![job](https://github.com/kdetony/devops/blob/master/Images/salida7.png "Salida")
+
+OBS.
+
+* Recordar que **devuser** debe tener permisos de **RWX** si desea escribir/modificar/ejcutar el contenido en un directorio donde no sea el owner.
+* Para validar nuestro JOB en el contenedor: 
+> docker exec -it appremoto bash 
+
+`Actividad`
+1. Crear llaves SSH en el contenedor para los usuarios:
+* devuser
+* root 
+1. Configurar las credenciales para los usuarios mencionados en jenkins. 
+
+
+
+
