@@ -256,8 +256,8 @@ OBS.
 Con nuestra imagen ya creada, la listamos con : 
 ```
 **docker images**
-REPOSITORY          TAG                 IMAGE ID            CREATED                          SIZE
-imghub               latest              84175a1aeeeb    21 seconds ago      313 MB
+REPOSITORY          TAG                 IMAGE ID            CREATED          SIZE
+imghub              latest              84175a1aeeeb    21 seconds ago      313 MB
 ```
 Ahora, un requisito para subir una imagen a Docker Hub es que sea de la forma : 
 
@@ -271,8 +271,8 @@ Volvemos a ejecutar:
 ```
 **docker images**
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-imghub               latest              84175a1aeeeb        43 minutes ago      313 MB
-kdetony/img1        0.1                 84175a1aeeeb        43 minutes ago      313 MB
+imghub             latest              84175a1aeeeb        43 minutes ago      313 MB
+kdetony/img1       0.1                 84175a1aeeeb        43 minutes ago      313 MB
 ```
 
 Y ahora procedemos a subir nuestra imagen:
@@ -331,9 +331,7 @@ Como parte de la instalacion de Jenkins, cuando estemos en esta pantalla, debemo
 
 Nos ubicamos en: *Nueva Tarea/ myjob*
 
-![Job](https://github.com/kdetony/devops/blob/master/Images/job.png "Job")
-
-OBS
+OBS.
 
 * Jenkins esta pensando en hacer tareas en servidores remotos.
 
@@ -347,7 +345,7 @@ Nos deslizamos hasta la opción **EJECUTAR**
 - Guardar
 - Finalmente, construir ahora
 
-![ex1](https://github.com/kdetony/kdetony/blob/master/Images/ex1.png "Ejecucion")
+![ex1](https://github.com/kdetony/devops/blob/master/Images/ex1.png "Ejecucion")
 
 Para ejecutar nuestro JOB simplemente hacemos clic en **"construir ahora"**.
 
