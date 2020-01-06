@@ -514,7 +514,7 @@ services:
     ports:
       - "4321:22"
     build:
-      context: app 
+      context: . 
     networks:
       - net
 networks:
@@ -611,3 +611,217 @@ OBS.
 * devuser
 * root 
 2. Configurar las credenciales para los usuarios mencionados en jenkins. 
+
+## Introducción a Gitlab 
+
+Vamos a crear un contenedor GitLab e integrarlo con Jenkins :) 
+
+docker-compose.yml
+```
+version: '3'
+services:
+  remote_host:
+    container_name: appremoto
+    image: imgapp
+    ports:
+      - "4321:22" 
+    build:
+      context: .
+    networks:
+      - net
+  git:
+    container_name: git-server
+    hostname: gitlab.example.com
+    ports:
+      - "443:443"
+      - "8888:80"
+    volumes:
+      - "/home/docker/gitlab/config:/etc/gitlab"
+      - "/home/docker/gitlab/logs:/var/log/gitlab"
+      - "/home/docker/docker/gitlab/data:/var/opt/gitlab"
+    image: gitlab/gitlab-ce
+    networks:
+      - net
+networks:
+  net:
+```
+
+Ejecutamos: 
+> docker-compose up -d 
+
+Ahora, en un webrowser colocamos: 
+
+> http://IP_SERVER_DOCKER:8888 
+
+Tendremos la siguiente pantalla: 
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab.png "gitlab")
+
+El password que vamos a usar es: `admin123`  y el usuario de acceso es `root`
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab1.png "gitlab")
+
+Posterior al logeo, veremos lo siguiente: 
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab3.png "gitlab")
+
+Vamos a crear un **grupo** y un **proyecto** para alojar un pequeño codigo, asi como asignaremos persmisos para acceder al repositorio:
+
+`Create a group`
+
+OBS.
+
+* Un grupo es una coleccion de varios proyectos!
+
+Hacemos clic en esta imagen: 
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab4.png "gitlab")
+
+Y luego completamos la siguiente informacion para el **grupo devapp**:
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab5.png "gitlab")
+
+Ahora creamos nuestro **proyecto** de nombre **maven**:
+
+Hacemos clic en **New Proyect**:
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab6.png "gitlab")
+
+Llenamos los siguientes datos: 
+```
+* Project Name: maven
+
+* Project URL: http://IP_SERVER_DOCKER:8888/devapp 
+
+* Project slug: maven 
+
+* Project Description: Proyecto de trabajo Maven, cliente None
+
+* Visibility Level: Private 
+
+* Check en Initialize repository with a README 
+```
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab7.png "gitlab")
+
+
+Y para finalizar hacemos clic en **Create Project**
+
+La salida debe ser similar a esta: 
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab8.png "gitlab")
+
+Hasta este punto, ya contamos con nuestro repositorio creado, vamos a proceder a configurar un usuario para que pueda trabajar en el repositorio creado.
+
+Nos ubicamos en la parte superior, y hacemos clic en la "llavecita" 
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab9.png "gitlab")
+
+Y en esta parte, hacemos clic en **New User** 
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab10.png "gitlab")
+
+El usuario se llamará **kratos**, tal y como muestra la imagen:
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab11.png "gitlab")
+
+El resultado, debe ser el siguiente, pero, antes de terminar, vamos a setear el password para el usuario, para ello, haccemos clic en **Edit**
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab12.png "gitlab")
+
+El password que asignaremos será: *kratos123*
+
+### Actividad.
+
+* Crear un usuario adicional de nombre: **devadmin** con password: *devadmin1234*
+
+Bien, el ultimo paso, es asignar el usuario **kratos** al proyecto que hemos creado, para realizar esta accion, vamos a hacer clic en el logo de gitlab ( parte superior ) y hacemos un clic mas en **devapp/maven** 
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab13.png "gitlab")
+
+En la barra lateral izquierda, nos ubicamos en: 
+
+> Settings/Members 
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab14.png "gitlab")
+
+Y acontinuación llenamos los sgts campos: 
+```
+* Gitlab member or Email address: kratos
+
+* Choose a role permission : Maintainer
+
+* Access expiration date : null 
+
+* Clic en  **Add to Project**
+```
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab15.png "gitlab")
+
+Al final debemos ya contar con 2 usuarios para el proyecto Maven: 
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab16.png "gitlab")
+
+Para hacer la validacion de nuestro repositorio, vamos a clonarlo, para lo cual hacemos clic en **clone/clone with HTTP**
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab17.png "gitlab")
+
+OBS.
+
+* Reemplazaar el nombre del dominio por: **IP_SERVER_DOCKER:8888**
+
+En nuestra consola en /tmp, vamos a ejecutar:
+```
+git clone http://IP_SERVER_DOCKER:8888/devapp/maven.git
+
+* username:kratos
+
+* password:kratos123
+```
+
+### Actividad
+
+* Añadir al usuario devadmin al grupo **DEVAPP/MAVEN** pero con el rol: **GUEST**, luego cambiarlo a **REPORTER** 
+
+* Para ambos casos realizar previamente git clone del repositorio.
+
+Vamos ahora clonar otro directorio y subirlo al nuestro, para ello vamos a realizar lo sgt:
+
+> git clone https://github.com/jenkins-docs/simple-java-maven-app.git
+
+Ahora, vamos a copiar el contenido del directorio **simple-java-maven-app** a **maven**
+
+OBS.
+
+* Validar que el directorio *.git* dentro de maven, mantenga la configuracion de nuestro servidor gitlab. 
+
+En el directorio **maven** ejecutamos: 
+
+> git add . 
+
+> git commit -m "subiendo files" 
+
+> git push
+
+OBS.
+
+* Si se presenta algun problema con la subida de archivos al repo, ejecutamos los sgt:
+```
+git config --global user.email "kratos@example.com"
+
+git config --global user.name "kratos del Olimpo"
+```
+
+Validamos el codigo que acabamos de subir: 
+
+![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab18.png "gitlab")
+
+### Jenkins con Maven 
+
+* En Jenkins instalamos el plugin para maven ( maven integration )
+
+* Validar que el plugin de git se encuentre instalado.
+
+* Creamos un nuevo **proyecto**: job-ci
+  
+* Crear el usuario "kratos" en Jenkins. ( este es el usuario de gitlab )
+
