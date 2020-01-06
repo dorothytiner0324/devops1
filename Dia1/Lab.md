@@ -1,6 +1,8 @@
 LABORATORIO  
 =============
 
+## PARTE 1 
+
 ### Introduccion Docker
 
 es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de virtualización de aplicaciones en múltiples sistemas operativo. <fuente *wikipedia*>
@@ -307,4 +309,178 @@ The push refers to repository [docker.io/kdetony/img1]
 
 Revisamos que nuestra imagen haya subido de forma correcta en Docker Hub.
 
+
+## PARTE 2 
+
+### Introduccion a Jenkins 
+Como parte de la instalacion de Jenkins, cuando estemos en esta pantalla, debemos solo copiar el PASSWD que nos va a figurar: 
+
+![web](https://github.com/kdetony/devops/blob/master/Images/install_jenkins.png "Web Jenkins")
+
+## Consola de Jenkins 
+
+#### Definiciones
+
+* job o tareas: son optimizaciones de lo que deseemos realizar ( serie de pasos que hacen X cosas)
+* personas: usuarios permitidos
+* historial: cada tarea o job tiene un historico, todas las tareas de guardan.
+
+![dashboard](https://github.com/kdetony/devops/blob/master/Images/dashboard.png "Dashboard Jenkins")
+
+`Creación de Job`
+
+Nos ubicamos en: *Nueva Tarea/ myjob*
+
+![Job](https://github.com/kdetony/devops/blob/master/Images/job.png "Job")
+
+OBS
+
+* Jenkins esta pensando en hacer tareas en servidores remotos.
+
+Luego de dar OK!, veremos esta pantalla: 
+
+![ex](https://github.com/kdetony/devops/blob/master/Images/ex.png "Ejecucion")
+
+
+Nos deslizamos hasta la opción **EJECUTAR**
+- opcion: Linea de Comandos Shell
+- Guardar
+- Finalmente, construir ahora
+
+![ex1](https://github.com/kdetony/kdetony/blob/master/Images/ex1.png "Ejecucion")
+
+Para ejecutar nuestro JOB simplemente hacemos clic en **"construir ahora"**.
+
+OBS
+
+* Cuando hacemos clic en **construir ahora**, nos aparecerá #1 que significa la primera ejecución hacemos clic en console output.
+
+![output](https://github.com/kdetony/devops/blob/master/Images/output.png "Salida Output")
+
+![salida](https://github.com/kdetony/devops/blob/master/Images/salida.png "Salida")
+
+Vamos a seguir mejorando nuestro **job**, para ello hacemos clic en **configurar**. Agregamos lo siguiente en el campo **"Ejecutar"**
+
+> echo "Hola Jenkins $(date)" >> /tmp/log
+
+Ejecutamos nuestro job, hacemos clic en **"construir ahora"**
+
+![job](https://github.com/kdetony/devops/blob/master/Images/job2.png "Job")
+
+OBS 
+
+* Esto se va a ejecutar en el contenedor de Jenkins ojo!
+
+Por último, vamos a usar unas variables para nuestro job de la sgt manera:
+
+Como siguiente paso, vamos a modificar el **job** con lo sgt y ejecutarlo:
+```
+NOMBRE="paquita"
+echo "Hola $NOMBRE que estas haciendo?, ya es tarde? $(date +%F)" 
+```
+![job](https://github.com/kdetony/devops/blob/master/Images/job3.png "Job")
+
+Vamos a manejar **VARIABLES DE ENTORNO**, para ello, vamos a crear un script de nombre **jenkins.sh** para ejeuctarlo via el job.
+```sh
+#!/bin/bash
+echo "hola $nombre $apellido"
+```
+
+A `jenkins.sh` damos permisos de ejecución: chmod +x jenkins.sh, y estará ubicado en `/opt`.
+
+Si ejecutamos el job veremos este resultado:
+
+![job](https://github.com/kdetony/devops/blob/master/Images/job4.png "Job")
+
+![job](https://github.com/kdetony/devops/blob/master/Images/salida1.png "Salida")
+
+Vemos que no se estan invocando las variables ... ¿?
+
+Esto se debe a que las variables de entorno son volatiles, nombre y apellido son variables que no son reconocidas por el script.
+
+Vamos a pasarlo como parametros de esta forma:
+
+![job](https://github.com/kdetony/devops/blob/master/Images/job5.png "Job")
+
+Vemos que sigue sin funcionar, debido a que el script no sabe interpretar de forma correcta los parametros que le hemos asignado, por ello, vamos a modificar el script de la sgt forma:
+```sh
+#!/bin/bash
+nombre=$1
+apellido=$2
+echo "hola $nombre $apellido"
+```
+
+Copiamos el script nuevamente al contendor, volvemos a "construir ahora" y validamos el resultado:
+
+![job](https://github.com/kdetony/devops/blob/master/Images/salida2.png "Salida")
+
+OBS.
+
+* De esta forma de interactuan con scripts fuera de nuestro contenedor.
+
+Pues bien, ahora vamos a enviarle los **PARAMETROS** adecuados, para ello, vamos a crear un nuevo JOB de nombre: **parameter**, y hacemos check en la opcion **"esta ejecucion debe parametrizarse"**
+
+![job](https://github.com/kdetony/devops/blob/master/Images/job6.png "Job")
+
+En añadir parametro, escogemos "parametro de cadena"
+```
+* Nombre: VALUE
+* Valor por defecto: 20
+```
+
+![job](https://github.com/kdetony/devops/blob/master/Images/job7.png "Job")
+
+Nos ubicamos en **EJECUTAR**
+
+Agregamos un script de shell ( Ejecutar linea de comandos shell )
+
+> echo "El $VALUE es un numero"
+
+Hacemos clic en **"build parameters"**
+
+![job](https://github.com/kdetony/devops/blob/master/Images/job8.png "Job")
+
+Tenemos mas tipos de parametros en Jenkins que nos pueden ser de utilidad, por lo cual vamos a ver lo siguiente:
+
+* En nuestro job "parameter" vamos a agregar la opción **Elección**
+
+Con los campos a completar:
+```
+* Nombre: OPCION
+* Opciones: SI, NO, Ninguno
+```
+
+![job](https://github.com/kdetony/devops/blob/master/Images/job9.png "Job")
+
+Nos ubicamos en la parte del script y añadimos: **$OPCION**
+
+![job](https://github.com/kdetony/devops/blob/master/Images/ejecutar.png "Ejecutar")
+
+Tendremos esta pantalla:
+
+![job](https://github.com/kdetony/devops/blob/master/Images/salida3.png "Salida")
+
+Ejecutamos nuestro **job**
+
+![job](https://github.com/kdetony/devops/blob/master/Images/salida4.png "Salida")
+
+Vamos a añadir ahora un "valor boleano" TRUE/FALSE sobre nuestro job **parameter**
+
+![job](https://github.com/kdetony/devops/blob/master/Images/job10.png "Job")
+
+OBS
+
+* Si hacemos check, el valor por defecto es TRUE
+
+En nuestro script, añadimos la variable:
+
+![job](https://github.com/kdetony/devops/blob/master/Images/job11.png "Job")
+
+Ejecutamos nuestro job y debemos tener lo siguiente:
+
+![job](https://github.com/kdetony/devops/blob/master/Images/job12.png "Job")
+
+Y en la ejecución:
+
+![job](https://github.com/kdetony/devops/blob/master/Images/salida5.png "Job")
 
