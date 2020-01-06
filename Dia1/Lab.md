@@ -825,3 +825,42 @@ Validamos el codigo que acabamos de subir:
   
 * Crear el usuario "kratos" en Jenkins. ( este es el usuario de gitlab )
 
+Cuando estemos creando el proyecto **job-ci** nos ubicamos en **Configurar el origen del codigo fuente** , y en la parte de **GIT** ingresamos los datos de nuestro servidor GitLab: 
+
+![maven](https://github.com/kdetony/devops/blob/master/Images/mvn.png "Maven") 
+
+Hacemos clic en **Construir**, y vemos la salida en la consola: 
+
+![maven](https://github.com/kdetony/devops/blob/master/Images/mvn1.png "Maven")
+
+
+En el servidor jenkins validar la ruta de descarga del proyecto.
+
+Ahora vamos a interactuar con maven, contruyendo codigo.
+
+Vamos a configurar Maven: **Administrar Jenkins/Global Tool Configuration**
+
+![maven](https://github.com/kdetony/devops/blob/master/Images/mvn2.png "Maven")
+
+
+Vamos a modificar el job **job-ci** para que interactúe con Maven, para lo cual escogemos la opcion: **Ejecutar tareas 'maven' de nivel superior**
+
+![maven](https://github.com/kdetony/devops/blob/master/Images/mvn3.png "Maven")
+
+![maven](https://github.com/kdetony/devops/blob/master/Images/mvn4.png "Maven")
+
+OBS.
+
+Esta instruccion la lanzamos directamente como parametro de maven:
+
+> -B -DskipTests clean package
+
+Guardamos y volvemos a contruir ( ejecutar job )
+
+La salida debe ser similar a esta:
+
+![maven](https://github.com/kdetony/devops/blob/master/Images/mvn5.png "Maven")
+
+
+
+
