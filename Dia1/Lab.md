@@ -7,8 +7,7 @@ es un proyecto de código abierto que automatiza el despliegue de aplicaciones d
 
 Vamos a inicializar un contenedor, para ello vamos a ejecutar el siguiente comando:
 
-
-```$docker run hello-world```
+> docker run hello-world
 
 OBS.
 
