@@ -36,7 +36,9 @@ OBS.
 
 ### Contenedores
 
-- Listar contendor: ```$docker ps -a```
+- Listar contendor: 
+> docker ps -a
+
 - Ejecutar un contenedor: 
 
 > docker run httpd
@@ -82,7 +84,7 @@ Para ejecutar un **Dockerfile**, usamos:
 
 > docker build --tag myapache .
 
-Con esto configuramos nuestra imagen de Centos7 con apache ( httpd ), ahora iniciamos el contenedor de nombre *apachetest* : 
+Con esto configuramos nuestra imagen de Centos7 con apache ( httpd ), ahora iniciamos el contenedor de nombre *apachetest*: 
 
 > docker run -d -p 80:80 apachetest
 
