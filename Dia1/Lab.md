@@ -487,7 +487,7 @@ Y en la ejecución:
 
 Nos conectamos a nuestro servidor Docker y en la ruta: /home/docker, vamos a crear la carpeta **app** ( dentro la carpeta app crearemos nuestro archivo Dockerfile )
 
-Dockerfile
+**Dockerfile**
 ```
 RUN yum -y install openssh-server net-tools
 
@@ -504,7 +504,7 @@ RUN /usr/sbin/sshd-keygen > /dev/null 2>&1
 CMD /usr/sbin/sshd -D
 ```
 
-docker-compose.yml
+**docker-compose.yml**
 ```
 version: '3'
 services:
@@ -608,7 +608,7 @@ OBS.
 1. Crear llaves SSH en el contenedor para los usuarios:
 * devuser
 * root 
-1. Configurar las credenciales para los usuarios mencionados en jenkins. 
+2. Configurar las credenciales para los usuarios mencionados en jenkins. 
 
 
 
