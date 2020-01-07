@@ -861,6 +861,13 @@ La salida debe ser similar a esta:
 
 ![maven](https://github.com/kdetony/devops/blob/master/Images/mvn5.png "Maven")
 
+OBS.
 
+Todo esto se ejecuta en: **/var/jenkins_home/workspace**
 
+Vamos a realizar un test para comprobar nuestro jar creado, para ello solo basta agregar una nueva tarea:
+
+![maven](https://github.com/kdetony/devops/blob/master/Images/mvn6.png "Maven")
+
+Vamos a obtener un error cuando ejecutemos el job, (validar esta linea )
 
