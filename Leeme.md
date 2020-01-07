@@ -19,3 +19,32 @@ Requerimientos
 - Cliente SSH ( Windows/Linux )
 - OS: Windows 10/7, Linux, MacOS
 - Paciencia y buen humor !!! 
+
+Desarrollo del Curso 
+======================
+
+### Dia 1  
+
+## Docker
+* Instalacion/Configuracion
+* Comandos, imagenes, contenedores, volumentes, redes 
+* Dockerfile/docker-compose
+* Dockerhub
+
+## Jenkins
+* Instalacion/Configuracion
+* Creacion de Jobs
+* Instalacion de Plugins
+* Jenkins hacia un Contenedor
+* Configuracion de credenciales
+
+## Gitlab
+* Instalacion/Configuracion
+* Creacion de grupo y proyecto
+* Creacion de usuario, cambio de passowrd yasignacion de rol
+* Asignacion de usuario a grupo/proyecto
+* Subida de codigo a repositorio
+
+## Maven & Jenkinks
+* Creacion de Job
+* Contruccion de artefacto

@@ -216,20 +216,19 @@ Validamos la ejecucion del contenedor, asi como el nombre de la imagen creada.
 
 OBS.
 
-OBS2.
-1.  -d es para enviar la ejecución a segundo plano
+1. "-d" es para enviar la ejecución a segundo plano
 
-2.- Si queremos ver la salida completa:
+2. Si queremos ver la salida completa:
 
 > docker-compose logs -f -t
 
-3.- Si queremos detenerlo:
+3. Si queremos detenerlo:
 > docker-compose down
 
-4.- Ver que está ejecutando:
+4. Ver que está ejecutando:
 > docker-compose ps 
 
-5.- Si queremos ejecutar alguna instrucción en el contenedor:
+5. Si queremos ejecutar alguna instrucción en el contenedor:
 
 > docker-compose exec ID_CONTAINER bash
 
