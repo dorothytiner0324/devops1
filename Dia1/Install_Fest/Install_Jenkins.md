@@ -69,7 +69,7 @@ OBS.
 
 * Le quitamos el check a *Install automatically*
 
-![jdk](https://github.com/kdetony/devops/blob/master/Images/jdk.png "Configure JDK")
+![jdk](https://github.com/kdetony/devops/blob/master/Images/jdk1.png "Configure JDK")
 
 OBS.
 
