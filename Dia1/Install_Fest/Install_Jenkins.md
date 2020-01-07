@@ -62,3 +62,20 @@ Esta herramienta, proviene de otra similar llamada Hudson, ideada por Kohsuke Ka
    - `Admin` > `Configure` > `Password`
 - Configurando el path de `java`
   - `Manage Jenkins` > `Global Tool Configuration` > `JDK`  
+
+![jdk](https://github.com/kdetony/devops/blob/master/Images/jdk.png "Configure JDK")
+
+OBS.
+
+* Le quitamos el check a *Install automatically*
+
+![jdk](https://github.com/kdetony/devops/blob/master/Images/jdk.png "Configure JDK")
+
+OBS.
+
+* Para obtener el JAVA_HOME, ejecutamos en nuestra consola:
+
+> echo $JAVA_HOME
+
+Finalizamos haciendo clic en **APPLY**
+
