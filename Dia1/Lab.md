@@ -861,8 +861,9 @@ La salida debe ser similar a esta:
 ![maven](https://github.com/kdetony/devops/blob/master/Images/mvn5.png "Maven")
 
 OBS.
+* Imagen **REFERENCIAL** :)
 
-Todo esto se ejecuta en: **/var/jenkins_home/workspace**
+* Todo esto se ejecuta en: **/var/lib/jenkins/workspace/job1/target/my-app-1.0-SNAPSHOT.jar**
 
 Vamos a realizar un test para comprobar nuestro jar creado, para ello solo basta agregar una nueva tarea:
 
