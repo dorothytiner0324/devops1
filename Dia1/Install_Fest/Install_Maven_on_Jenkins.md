@@ -19,7 +19,7 @@
    vi ~/.bash_profile
    M2_HOME=/opt/maven
    M2=/opt/maven/bin
-   PAHT=$PATH:$HOME/bin:$JAVA_HOME
+   PAHT=$PATH:$HOME/bin:$JAVA_HOME:$M2:$M2_HOME
    ```
 #### Checkpoint 
 1. Realizamos un logoff y nos volvemos a logear para validar la version de maven:
