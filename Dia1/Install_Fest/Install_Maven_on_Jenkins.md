@@ -38,4 +38,6 @@ Hasta ahora hemos completado la instalación de maven, ahora vamos a instalar el
   - `Manage Jenkins` > `Jenkins Plugins` > `available` > `Maven Integration`
 
 2. Configurando el PATH de Maven
-  - `Manage Jenkins` > `Global Tool Configuration` > `Maven`
+  - `Manage Jenkins` > `Global Tool Configuration` > `Maven` 
+     * Name: M2_HOME
+     * Maven_Home: /opt/maven
