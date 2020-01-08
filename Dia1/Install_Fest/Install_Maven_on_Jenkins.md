@@ -5,12 +5,13 @@
 1. Descargamos maven de: **https://maven.apache.org/download.cgi**. En nuestro caso, usaremos la ruta: **/opt/maven** como directorio de instalación.
  - Link : https://maven.apache.org/download.cgi
     ```sh
-     # En /opt creamos el directorio maven
-     mkdir /opt/maven
-     cd /opt/maven
-     # Descargando maven versión 3.6.0
+     # En /opt descargamos maven version 3.6.0:
+     cd /opt
+     # Descargando maven versión 3.6.0:
      wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz
-     tar -xvzf apache-maven-3.6.1-bin.tar.gz
+     tar -xvzf apache-maven-3.6.1-bin.tar.gz 
+     # Renombramos: 
+     mv apache-maven-xxx maven
      ```
 	
 1. Configuramos **M2_HOME** y **M2** en **.bash_profile**, esta configuracion puede ser para cualquier usuario ojo!, en nuestro caso usaremos root para esta configuración: 
