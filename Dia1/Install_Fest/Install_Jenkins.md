@@ -17,7 +17,7 @@ Esta herramienta, proviene de otra similar llamada Hudson, ideada por Kohsuke Ka
    ```sh
    java -version
    find /usr/lib/jvm/java-1.8* | head -n 3
-   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-1.el8_0.x86_64
+   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.XXXX.el8_0.x86_64
    export JAVA_HOME
    PATH=$PATH:$JAVA_HOME
     # Para hacerlo permanente, debemos agregarlo en .bash_profile para un usuario determinado, ejm. root, sysadmin, etc
@@ -36,8 +36,8 @@ Esta herramienta, proviene de otra similar llamada Hudson, ideada por Kohsuke Ka
 1. Descargamos la ultima version de jenkins desde: https://pkg.jenkins.io/redhat-stable/   e instalamos:
    ```sh
    yum -y install wget
-   sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-   sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+   wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+   rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
    yum -y install jenkins
    ```
 
