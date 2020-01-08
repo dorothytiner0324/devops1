@@ -35,7 +35,7 @@ Esta herramienta, proviene de otra similar llamada Hudson, ideada por Kohsuke Ka
  You can install jenkins using the rpm or by setting up the repo. We will set up the repo so that we can update it easily in the future.
 1. Descargamos la ultima version de jenkins desde: https://pkg.jenkins.io/redhat-stable/   e instalamos:
    ```sh
-   yum -y install wget
+   yum -y install wget vim vim-enhanced git
    wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
    rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
    yum -y install jenkins
