@@ -8,8 +8,8 @@
      # En /opt descargamos maven version 3.6.0:
      cd /opt
      # Descargando maven versión 3.6.0:
-     wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz
-     tar -xvzf apache-maven-3.6.1-bin.tar.gz 
+     wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+     tar -xvzf apache-maven-3.6.3-bin.tar.gz 
      # Renombramos: 
      mv apache-maven-xxx maven
      ```
