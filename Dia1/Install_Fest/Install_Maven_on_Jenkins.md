@@ -17,9 +17,9 @@
 1. Configuramos **M2_HOME** y **M2** en **.bash_profile**, esta configuracion puede ser para cualquier usuario ojo!, en nuestro caso usaremos root para esta configuración: 
    ```sh
    vi ~/.bash_profile
-   M2_HOME=/opt/maven/apache-maven-3.6.1
-   M2=$M2_HOME/bin
-   PAHT=<Existing_PATH>:$M2_HOME:$M2
+   M2_HOME=/opt/maven
+   M2=/opt/maven/bin
+   PAHT=$PATH:$HOME/bin:$JAVA_HOME
    ```
 #### Checkpoint 
 1. Realizamos un logoff y nos volvemos a logear para validar la version de maven:
