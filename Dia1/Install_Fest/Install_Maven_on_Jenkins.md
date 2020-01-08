@@ -14,13 +14,16 @@
      mv apache-maven-xxx maven
      ```
 	
-1. Configuramos **M2_HOME** y **M2** en **.bash_profile**, esta configuracion puede ser para cualquier usuario ojo!, en nuestro caso usaremos root para esta configuración: 
+1. Configuramos **M2_HOME** y **MAVEN_HOME** en **.bashrc**, esta configuracion puede ser para cualquier usuario ojo!, en nuestro caso usaremos root para esta configuración: 
    ```sh
    vi ~/.bash_profile
+   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-1.el8_0.x86_64
+
    M2_HOME=/opt/maven
-   M2=/opt/maven/bin
-   PATH=$PATH:$HOME/bin:$JAVA_HOME:$M2:$M2_HOME
-   ```
+   MAVEN_HOME=/opt/maven
+   PATH=${M2_HOME}/bin:${PATH}
+  #Salimos de la sesion actual, y volvemos a validar, la version de maven como java 
+  ```
 #### Checkpoint 
 1. Realizamos un logoff y nos volvemos a logear para validar la version de maven:
   
