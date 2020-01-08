@@ -38,8 +38,8 @@ Hasta ahora hemos completado la instalación de maven, ahora vamos a instalar el
 
 ### En el dashboard de Jenkins
 1. Instalamos el plugin de maven:
-  - `Manage Jenkins` > `Jenkins Plugins` > `available` > `Maven Invoker`
-  - `Manage Jenkins` > `Jenkins Plugins` > `available` > `Maven Integration`
+  - `Manage Jenkins` > `Manage Plugins` > `available` > `Maven Invoker`
+  - `Manage Jenkins` > `Manage Plugins` > `available` > `Maven Integration`
 
 2. Configurando el PATH de Maven
   - `Manage Jenkins` > `Global Tool Configuration` > `Maven` 
