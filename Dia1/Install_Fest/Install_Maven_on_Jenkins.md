@@ -23,7 +23,8 @@
    MAVEN_HOME=/opt/maven
    PATH=${M2_HOME}/bin:${PATH}
    # Salimos de la sesion actual, y volvemos a validar, la version de maven como java 
-  ```
+   ```
+  
 #### Checkpoint 
 1. Realizamos un logoff y nos volvemos a logear para validar la version de maven:
   
