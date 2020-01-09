@@ -875,3 +875,72 @@ El resultado debe ser similar a esto:
 ![maven](https://github.com/kdetony/devops/blob/master/Images/mvn7.png "Maven")
 
 
+CI/CD : Jenkins Pipeline + Maven + Docker
+========================================
+
+Lo que haremos ahora será la integración de las herramientas que hemos visto hasta el momento, pero ahora, usaremos un nuevo "concepto" **pipeline**.
+
+Un **pipeline** es una *nueva forma de trabajar* en el mundo devops usando integración continua. 
+Utilizando pipeline y Jenkins, podemos definir el ciclo de vida completo de una aplicación (descargar código, compilar, test, desplegar, etc.) mediante código. En otras palabras: *"son los estados, de todo el ciclo que deseamos implementar".*
+
+### ¿Qué es un Delivery pipeline?
+
+Es en esencia, una implementación automatizada de la construcción, testeo, despliegue y el proceso de puesta en producción de la aplicación. Sus propósitos son:
+
+* Hacer visible cada parte del proceso de construcción, imple*mentación, pruebas y liberación de software a todo el mundo que participa en el proyecto.
+* Obtener feedback lo más rápido posible de modo que los problemas sean identificados y resultados tan pronto como se pueda, facilitando su solución.
+* Permite a los equipos, dejar a disposición del responsable software compilado y testado, preparado para producción en cualquier momento a través de un proceso totalmente automatizado.
+
+ 
+### ¿Qué son los pipelines de Jenkins?
+
+Son un conjunto de complementos que nos permiten definir nuestros flujos de integración/entrega continua (delivery pipeline**) en Jenkins.
+
+### Jenkinsfile
+
+El pipeline del proyecto se declara en un fichero, se almacena y se versiona junto con el código en un fichero comúnmente llamado Jenkinsfile. En este fichero definimos principalmente las fases (stages) de que las consta nuestro flujo.
+
+A parte de las fases mencionadas anteriormente podemos añadir cualquier código que necesitemos como funciones, parámetros, configuraciones...
+
+### Stages (Fases)
+
+Las fases de nuestro flujo pueden ser muy distintas según el proyecto y las tecnologías con las que trabajemos.
+
+Por ejemplo, cuando hablamos de fases en un flujo de Continuous Deployment, estamos hablando de cada una de las etapas que tenemos desde que el desarrollador sube su código hasta que este es desplegado automáticamente.
+
+Un proyecto java común puede estar compuesto por fases (stages) como: clonado de código, compilado, ejecución de tests, análisis estático, generación y subida de artefacto,construcción de imagen docker y despliegue.
+
+Vamos a partir de este Jenkinsfile 
+```
+pipeline { 
+  agent any 
+
+  stage {'Build'} {   
+      steps {
+          sh '''
+              echo Build
+             '''
+      }
+  } 
+  stage {'Test'} { 
+      steps {
+          sh 'echo test'
+      }
+  } 
+  stage {'Push'} {
+      steps {
+          sh 'echo Push'
+      }
+  }
+  stage{'Deploy'} {
+      steps {
+          sh 'echo Deploy'
+      }
+  }
+}
+```
+Podemos visualizar claramente cuales son los pasos en este Jenkinsfile: Build, Test, Push y Deploy
+Acontinuación vamos a crear el **JAR** para nuestro aplicativo de ejemplo.
+
+### Creacion de JAR 
+Vamos a trabar con el aplicativo que ya hemos visto anteriormente: **simple-java-maven-app**
