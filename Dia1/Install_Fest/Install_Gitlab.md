@@ -21,7 +21,7 @@ services:
       - net
 networks:
   net:
-
+```
 1. Procedemos ejecutar el `docker-compose.yml`:
 
 > docker-compose up -d 
@@ -30,6 +30,7 @@ networks:
 
 > https://IP_SERVER_DOCKER:443" 
 
-```sh
+```
+sh
 user: root
 ```
