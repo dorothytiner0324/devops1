@@ -88,7 +88,7 @@ pipeline {
 
         stage('Build') {
             steps {
-        sh './deploy/hello-world/build.sh'   
+                sh './deploy/hello-world/build.sh'   
             }
         }                        
         stage('Test') {
@@ -103,7 +103,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-       		sh './deploy/hello-world/deploy.sh'
+    	     sh './deploy/hello-world/deploy.sh'
             }
         }
     }
