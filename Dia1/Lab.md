@@ -869,5 +869,9 @@ Vamos a realizar un **test** para comprobar nuestro jar creado, para ello solo b
 
 ![maven](https://github.com/kdetony/devops/blob/master/Images/mvn6.png "Maven")
 
-Vamos a obtener un error cuando ejecutemos el job, (validar esta linea )
+El resultado debe ser similar a esto:
+
+
+![maven](https://github.com/kdetony/devops/blob/master/Images/mvn7.png "Maven")
+
 
