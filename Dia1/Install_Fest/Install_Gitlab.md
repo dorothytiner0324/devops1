@@ -27,9 +27,8 @@ networks:
 > docker-compose up -d 
 
 1. Para ingresar al Gitlab: 
-
-> https://IP_SERVER_DOCKER:443" 
-
 ```
-user: root
+https://IP_SERVER_DOCKER:443" 
 ```
+> user: root
+
