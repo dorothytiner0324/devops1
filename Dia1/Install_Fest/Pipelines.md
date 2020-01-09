@@ -81,31 +81,31 @@ OBS.
 
 ```
 pipeline {
-  agent any
-  stages { 
-    stage{'Build'} {
-      steps {  
-        sh ''' 
-               ./PATH/build.sh 
-           '''
-      }
+
+    agent any
+
+    stages {
+
+        stage('Build') {
+            steps {
+        sh './deploy/hello-world/build.sh'   
+            }
+        }                        
+        stage('Test') {
+            steps {
+		sh './deploy/hello-world/test.sh' 
+            }
+        }
+        stage('Push') {
+            steps {
+		sh './deploy/hello-world/push.sh'
+            }
+        }
+        stage('Deploy') {
+            steps {
+       		sh './deploy/hello-world/deploy.sh'
+            }
+        }
     }
-    stage{'Test'} {
-      steps {  
-        sh './PATH/test.sh'
-      }
-    }
-    stage{'Push'} {
-      steps {  
-        sh './PATH/push.sh
-           '
-      }
-    }
-    stage{'Deploy'} {
-      steps {  
-        sh './PATH/deploy.sh'
-      }
-    }
-  }
 }
 ```
