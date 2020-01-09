@@ -31,6 +31,5 @@ networks:
 > https://IP_SERVER_DOCKER:443" 
 
 ```
-sh
 user: root
 ```
