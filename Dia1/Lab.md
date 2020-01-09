@@ -865,7 +865,7 @@ OBS.
 
 * Todo esto se ejecuta en: **/var/lib/jenkins/workspace/job1/target/my-app-1.0-SNAPSHOT.jar**
 
-Vamos a realizar un test para comprobar nuestro jar creado, para ello solo basta agregar una nueva tarea:
+Vamos a realizar un **test** para comprobar nuestro jar creado, para ello solo basta agregar una nueva tarea:
 
 ![maven](https://github.com/kdetony/devops/blob/master/Images/mvn6.png "Maven")
 
