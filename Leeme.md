@@ -23,28 +23,48 @@ Requerimientos
 Desarrollo del Curso 
 ======================
 
-### Dia 1  
+## Dia 1  
 
-## Docker
+### Docker
 * Instalacion/Configuracion
 * Comandos, imagenes, contenedores, volumentes, redes 
 * Dockerfile/docker-compose
 * Dockerhub
 
-## Jenkins
+### Jenkins
 * Instalacion/Configuracion
 * Creacion de Jobs
 * Instalacion de Plugins
 * Jenkins hacia un Contenedor
 * Configuracion de credenciales
 
-## Gitlab
+### Gitlab
 * Instalacion/Configuracion
 * Creacion de grupo y proyecto
 * Creacion de usuario, cambio de passowrd yasignacion de rol
 * Asignacion de usuario a grupo/proyecto
 * Subida de codigo a repositorio
 
-## Maven & Jenkinks
+### Maven & Jenkinks
 * Creacion de Job
 * Contruccion de artefacto
+* CI Jenkins/Gitlab
+
+## Dia 2
+
+### Ansible
+* Instalacion/Configuracion
+* Comandos basicos
+* Playbooks
+* CI Jenkins/Ansible
+
+### Tomcat/Jboss
+* Instalacion/Configuracion
+* Deployments
+* CI Jenkins/Gitlab
+
+### Kubernetes
+* Instalacion/Configuracion
+* Creacion de Cluster
+* Ejemplos de: Deployments, Namespaces, Services, Replicaset
+* CI Gitlab
