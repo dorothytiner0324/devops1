@@ -91,7 +91,7 @@ scp $DIR/webapp.war root@$HOST:/tmp/prd
 ssh root@$HOST docker cp /tmp/prd/webapp.war webprd:/usr/local/tomcat/webapps/
 ```
 OBS.
-* Debemos copiar tomcat-users.xml en el contendor creado
+* Debemos copiar tomcat-users.xml (carpeta OTHER) en el contendor creado
 * Podemos crear un Dockerfile y agilizar aun este proceso
 > chown -R jenkins.jenkins app 
 
