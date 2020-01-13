@@ -48,13 +48,13 @@ echo "##########"
 echo "Push"
 echo "##########"
 
-HOST="IP_SERVER"
+HOST="159.89.50.8"
 DIR="/tmp/hello-world/webapp/target"
 
-ssh $HOST docker stop $(docker ps -qa)
-ssh $HOST docker run --rm -dit -p 9090:8080 --name webtest tomcat:8.5
-scp $DIR/webapp.war $HOST:/tmp/ 
-ssh $HOST docker cp /tmp/webapp.war /usr/local/tomcat/webapps/
+ssh root@$HOST 'docker stop $(docker ps -qa)'
+ssh root@$HOST docker run --rm -dit -p 9090:8080 --name webtest tomcat:8.5
+scp $DIR/webapp.war root@$HOST:/tmp/
+ssh root@$HOST docker cp /tmp/webapp.war webtest:/usr/local/tomcat/webapps/
 
 ```
 OBS.
