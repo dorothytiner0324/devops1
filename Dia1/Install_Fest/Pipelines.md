@@ -33,7 +33,7 @@ echo "Test"
 echo "########"
 
 cd /tmp/hello-world
-mvn test
+/opt/maven/bin/mvn test
 ```
 OBS.
 * El resultado de nuestra prueba unitaria ( unit test ) se encuentra en: */tmp/hello-world/webapp/target/surefire-reports*.
@@ -48,8 +48,8 @@ echo "##########"
 echo "Push"
 echo "##########"
 
-HOST=165.227.194.119
-DIR=/tmp/hello-world/webapp/target
+HOST="IP_SERVER"
+DIR="/tmp/hello-world/webapp/target"
 
 ssh $HOST docker stop $(docker ps -qa)
 ssh $HOST docker run --rm -dit -p 9090:8080 --name webtest tomcat:8.5
@@ -68,8 +68,8 @@ echo "##########"
 echo "Deploy PRD"
 echo "##########"
 
-HOST=165.227.194.119
-DIR=/tmp/hello-world/webapp/target
+HOST="165.227.194.119"
+DIR="/tmp/hello-world/webapp/target"
 
 ssh $HOST docker stop $(docker ps -qa)
 ssh $HOST docker run --rm -dit -p 9595:8080 --name webprd tomcat:8.5
@@ -84,7 +84,6 @@ OBS.
 > chown -R jenkins.jenkins app 
 
 # Pipeline
-
 ```
 pipeline {
 
@@ -92,24 +91,32 @@ pipeline {
 
     stages {
 
-        stage('Build') {
+        stage('Build') { 
             steps {
-                sh './deploy/hello-world/build.sh'   
-            }
+            dir ('/var/lib/jenkins/app') { 
+            sh './build.sh'
+             }
+            } 
         }                        
         stage('Test') {
             steps {
-		sh './deploy/hello-world/test.sh' 
+            dir ('/var/lib/jenkins/app') {
+		sh './test.sh'
+            }
             }
         }
         stage('Push') {
             steps {
-		sh './deploy/hello-world/push.sh'
+            dir ('/var/lib/jenkins/app') {
+		sh './push.sh'
+            }
             }
         }
         stage('Deploy') {
             steps {
-    	     sh './deploy/hello-world/deploy.sh'
+                dir ('/var/lib/jenkins/app') {
+    	     sh './deploy.sh'
+                }
             }
         }
     }
