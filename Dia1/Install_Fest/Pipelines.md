@@ -16,10 +16,11 @@ echo "#########"
 echo "Build"
 echo "########"
 
+rm -rf /tmp/hello-world
 cd /tmp
-git clone https://IP_SERVER_GITLAB:XXX/hello-world.git 
+git clone https://github.com/yankils/hello-world.git
 cd hello-world
-mvn package 
+/opt/maven/bin/mvn package
 ```
 OBS.
 * La ruta donde se genera el *war* deberia ser: /tmp/hello-world/webapp/target/webapp.war
