@@ -2,6 +2,10 @@ Procedimiento
 ================
 Vamos a trabajar en el Servidor Jenkins
 
+OBS.
+
+* Debemos tener habilitados los plugins: **publish over ssh, ssh, ssh agent**
+
 # Scripts
 0. Creamos la carpeta **/var/lib/jenkins/app**, y aqui estarán todos los scripts.
 
