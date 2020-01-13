@@ -1,8 +1,9 @@
 Procedimiento
 ================
+Vamos a trabajar en el Servidor Jenkins
 
 # Scripts
-0. Creamos la carpeta **/deploy/hello-world** en el servidor Jenkins, y en esta carpeta crearemos todos los scripts.
+0. Creamos la carpeta **/var/lib/jenkins/app**, y aqui estarán todos los scripts.
 
 1. Primer script: *build.sh*
 ```sh
