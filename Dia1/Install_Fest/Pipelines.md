@@ -80,7 +80,7 @@ ssh $HOST docker restart webprd
 OBS.
 * Debemos copiar tomcat-users.xml en el contendor creado
 * Podemos crear un Dockerfile y agilizar aun este proceso
-
+> chown -R jenkins.jenkins app 
 
 # Pipeline
 
