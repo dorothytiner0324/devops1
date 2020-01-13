@@ -947,4 +947,12 @@ Vamos a trabar con el aplicativo que ya hemos visto anteriormente: **simple-java
 
 El artefacto JAR creado se encuentra en: **/var/lib/jenkins/workspace/job1/target/my-app-1.0-SNAPSHOT.jar** (servidor Jenkins)
 
-
+### Deployment 
+Para este passo, usaremos este Dockerfile:
+```
+FROM java:8
+WORKDIR /app
+COPY my-app-1.0-SNAPSHOT.jar /app/my-app-1.0-SNAPSHOT.jar
+EXPOSE 8080
+CMD java - jar my-app-1.0-SNAPSHOT.jar
+```
