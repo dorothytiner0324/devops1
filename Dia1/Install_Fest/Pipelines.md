@@ -8,6 +8,11 @@ OBS.
 * su - jenkins -s/bin/bash
 * ssh-keygen -t rsa
 * Copy id_rsa.pub root a /var/lib/jenkins/.shh
+* Los permisos para los archivos:
+ ```sh
+ jenkins: id_rsa     | -rw-------.
+ jenkins: id_rsa.pub | -rw-r--r--.
+ ```
 
 # Scripts
 0. Creamos la carpeta **/var/lib/jenkins/app**, y aqui estarán todos los scripts.
