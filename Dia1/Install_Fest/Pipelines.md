@@ -68,15 +68,14 @@ echo "##########"
 echo "Deploy PRD"
 echo "##########"
 
-HOST="165.227.194.119"
+HOST="159.89.50.8"
 DIR="/tmp/hello-world/webapp/target"
 
-ssh $HOST docker stop $(docker ps -qa)
-ssh $HOST docker run --rm -dit -p 9595:8080 --name webprd tomcat:8.5
-ssh $HOST mkdir -p /tmp/prd
-scp $DIR/webapp.war $HOST:/tmp/prd
-ssh $HOST docker cp /tmp/prd/webapp.war /usr/local/tomcat/webapps/
-ssh $HOST docker restart webprd
+#ssh $HOST 'docker stop $(docker ps -qa)'
+ssh root@$HOST docker run --rm -dit -p 9595:8080 --name webprd tomcat:8.5
+ssh root@$HOST 'mkdir -p /tmp/prd'
+scp $DIR/webapp.war root@$HOST:/tmp/prd
+ssh root@$HOST docker cp /tmp/prd/webapp.war webprd:/usr/local/tomcat/webapps/
 ```
 OBS.
 * Debemos copiar tomcat-users.xml en el contendor creado
