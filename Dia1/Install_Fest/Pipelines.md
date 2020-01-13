@@ -5,6 +5,9 @@ Vamos a trabajar en el Servidor Jenkins
 OBS.
 
 * Debemos tener habilitados los plugins: **publish over ssh, ssh, ssh agent**
+* su - jenkins -s/bin/bash
+* ssh-keygen -t rsa
+* Copy id_rsa.pub root a /var/lib/jenkins/.shh
 
 # Scripts
 0. Creamos la carpeta **/var/lib/jenkins/app**, y aqui estarán todos los scripts.
