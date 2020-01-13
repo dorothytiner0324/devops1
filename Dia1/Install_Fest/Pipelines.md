@@ -13,6 +13,11 @@ OBS.
  jenkins: id_rsa     | -rw-------.
  jenkins: id_rsa.pub | -rw-r--r--.
  ```
+ TIP:
+```sh
+cat id_rsa.pub > /var/lib/jenkins/.ssh/id_rsa.pub
+cat id_rsa > /var/lib/jenkins/.ssh/id_rsa
+```
 
 # Scripts
 0. Creamos la carpeta **/var/lib/jenkins/app**, y aqui estarán todos los scripts.
