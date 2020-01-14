@@ -417,7 +417,7 @@ OBS.
 
 Pues bien, ahora vamos a enviarle los **PARAMETROS** adecuados, para ello, vamos a crear un nuevo JOB de nombre: **parameter**, y hacemos check en la opcion **"esta ejecucion debe parametrizarse"**
 
-![job](https://github.com/kdetony/devops/blob/master/Images/job6.png "Job")
+#![job](https://github.com/kdetony/devops/blob/master/Images/job6.png "Job")
 
 En añadir parametro, escogemos "parametro de cadena"
 ```
