@@ -848,7 +848,7 @@ Vamos a **validar** la configuracion de Maven en Jenkins para ello:
 
 Vamos a modificar el job **job-ci** para que interactúe con Maven, para lo cual escogemos la opcion: **Ejecutar tareas 'maven' de nivel superior**
 
-![maven](https://github.com/kdetony/devops/blob/master/Images/mvn3.png "Maven")
+![maven](https://github.com/kdetony/devops/blob/master/Images/mvn31.png "Maven")
 
 ![maven](https://github.com/kdetony/devops/blob/master/Images/mvn4.png "Maven")
 
