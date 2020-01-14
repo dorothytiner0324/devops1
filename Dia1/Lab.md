@@ -93,7 +93,7 @@ Con esto configuramos nuestra imagen de Centos7 con apache ( httpd ), ahora inic
 Vamos a agregar un **index.html** en nuestra imagen para ello, en nuestro Dockerfile
 
 ```
-FROM centos
+FROM centos:7
 
 RUN yum -y install httpd
 
@@ -488,13 +488,13 @@ Nos conectamos a nuestro servidor Docker y en la ruta: /home/docker, vamos a cre
 
 **Dockerfile**
 ```
+FROM centos:7
+
 RUN yum -y install openssh-server net-tools
 
 RUN useradd devuser && \
     echo "devuser" | passwd devuser  --stdin && mkdir /home/devuser/.ssh && \
     chmod 700 /home/devuser/.ssh
-
-COPY llave.pub /home/devuser/.ssh/authorized_keys
 
 RUN chown devuser:devuser  -R /home/devuser &&  chmod 600 /home/devuser/.ssh/authorized_keys
 
