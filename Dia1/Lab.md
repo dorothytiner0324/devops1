@@ -978,16 +978,21 @@ ssh root@HOST cd /tmp/app; docker run -dit -p 7070:8080 --name webjar imgjar
 
 * Ahora creamos un pipeline, el nombre será: testpipe 
 ```
-pipeline { 
-  agent any 
+pipeline {
 
-   stage('Deploy') {
+    agent any
+
+    stages {
+
+        stage('Deploy') {
             steps {
                 dir ('/tmp/deploy') {
     	     sh './deploy.sh'
                 }
-         }
-  }
+            }
+        }
+    }
+}
 ```
 
 Guardamos y procedemos a ejecutarlo
