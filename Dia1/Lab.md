@@ -1018,7 +1018,10 @@ System.out.println("Salvavidas por si algo falla");
 }
 ```
 > javac -d . prueba.java
-> jar cvf pruebatapp.jar pruebaApp.class
+
+> jar cvf prueba.jar prueba.class
+
+> java -jar prueba.jar
 
 * Nos saldra un mensaje similar a este:
 ```
@@ -1027,11 +1030,8 @@ no main manifest attribute, in prueba.jar
 
 * Creamos el archivo **MANIFEST.MF** con el siguiente contenido:
 ```
-Manifest-Version: 1.0
-
-Created-By: Anthony Mogrovejo
-
 Main-Class: prueba
+Created-By: Anthony Mogrovejo
 ```
 
 * Ejecutamos: 
