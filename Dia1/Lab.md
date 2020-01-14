@@ -482,7 +482,7 @@ Y en la ejecución:
 
 Como paso inicial, vamos a crear un usuario de nombre **deploy** en el servidor docker.
 
-Nos conectamos a nuestro servidor Docker y en la ruta: /home/docker, vamos a crear la carpeta **app** ( dentro la carpeta app crearemos nuestro archivo Dockerfile )
+Nos conectamos a nuestro servidor Docker y en la ruta: /home/deploy, vamos a crear la carpeta **app** ( dentro la carpeta app crearemos nuestro archivo *Dockerfile y docker-compose.yml* )
 
 **Dockerfile**
 ```
@@ -494,7 +494,9 @@ RUN useradd devuser && \
     echo "devuser" | passwd devuser  --stdin && mkdir /home/devuser/.ssh && \
     chmod 700 /home/devuser/.ssh
 
-RUN chown devuser:devuser  -R /home/devuser &&  chmod 600 /home/devuser/.ssh/authorized_keys
+RUN chown devuser:devuser -R /home/devuser && touch /home/devuser/.ssh/authorized_keys
+
+RUN chmod 600 /home/devuser/.ssh/authorized_keys
 
 RUN /usr/sbin/sshd-keygen > /dev/null 2>&1
 
@@ -521,6 +523,7 @@ networks:
 Ejecutamos: 
 
 > docker-compose build 
+
 > docker-compose up -d 
 
 Lo que hará docker-compose, es crear una con imagen centos, esta imagen tendra de nombre *imgapp* y luego creará el contenedor de nombre: *appremoto*.
@@ -529,15 +532,19 @@ Entramos en el contendor:
 
 > docker exec -it appremoto bash 
 
-Y ahora, vamos a realizar 2 acciones, primero, crear un usuario: **devuser** y como segundo paso, crear un password para **root**. 
-
-> useradd -d /home/devuser -m devuser
+Y ahora, vamos a asignarle un password para **root**. 
 
 > passwd devuser 
 
 > passwd root 
 
+OBS.
+* Asignar como password de root: *supertux*
+
 Acto siguiente desde la consola, vamos a activar el plugin de SSH y realizar la configuracion del contenedor que hemos creado.
+
+OBS.
+* Plugins SSH: Publish Over ssh, SSH, SSH AGENT
 
 En el menú de Jenkins:
 
