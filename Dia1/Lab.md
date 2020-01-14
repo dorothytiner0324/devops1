@@ -1018,13 +1018,14 @@ System.out.println("Salvavidas por si algo falla");
 }
 ```
 > javac -d . prueba.java
+> jar cvf pruebatapp.jar pruebaApp.class
 
-* Tendremos los sgts archivos generados:
+* Nos saldra un mensaje similar a este:
 ```
-prueba.class |  prueba.java
+no main manifest attribute, in prueba.jar
 ```
 
-* Creamos el archivo **manifest.mf** con el siguiente contenido:
+* Creamos el archivo **MANIFEST.MF** con el siguiente contenido:
 ```
 Manifest-Version: 1.0
 
@@ -1034,7 +1035,7 @@ Main-Class: prueba
 ```
 
 * Ejecutamos: 
-> jar cfm prueba.jar manifest.mf prueba.class
+> jar cvmf MANIFEST.MF prueba.jar prueba.class
 
 * Validamos la salida del jar previamente:
 > java -jar prueba.jar
