@@ -618,27 +618,19 @@ OBS.
 
 ## Introducción a Gitlab 
 
-Vamos a crear un contenedor GitLab e integrarlo con Jenkins :) 
+Vamos a crear un contenedor GitLab e integrarlo con Jenkins :)  ( docker-compose.yml se creará en */home/deploy/gitlab* )
 
 docker-compose.yml
 ```
 version: '3'
 services:
-  remote_host:
-    container_name: appremoto
-    image: imgapp
-    ports:
-      - "4321:22" 
-    build:
-      context: .
-    networks:
-      - net
   git:
     container_name: git-server
     hostname: gitlab.example.com
     ports:
       - "443:443"
       - "8888:80"
+      - "4421:22"
     volumes:
       - "/home/docker/gitlab/config:/etc/gitlab"
       - "/home/docker/gitlab/logs:/var/log/gitlab"
@@ -651,6 +643,7 @@ networks:
 ```
 
 Ejecutamos: 
+
 > docker-compose up -d 
 
 Ahora, en un webrowser colocamos: 
