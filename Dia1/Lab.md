@@ -951,6 +951,35 @@ Vamos a trabar con el aplicativo que ya hemos visto anteriormente: **simple-java
 
 El artefacto JAR creado se encuentra en: **/var/lib/jenkins/workspace/job1/target/my-app-1.0-SNAPSHOT.jar** (servidor Jenkins)
 
+### En el servidor Jenkins
+
+* Instalar los plugins: docker, docker build step, docker compose build step
+
+
+### En el Servidor Docker
+
+Antes de empezar a trabajar con lo que será nuestro primer pipeline, debemos realizar estas acciones en el servidor docker:
+
+> mkdir -p /etc/systemd/system/docker.service.d
+
+> vim startup_options.conf
+```
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376
+```
+> systemctl daemon-reload
+
+> systemctl restart docker 
+
+OBS.
+* Tambien se puede crear un archivo de nombre **daemon.json** en /etc/docker con el sgt contenido:
+```
+{
+ "hosts": ["tcp:0.0.0.0:2375"] 
+}
+```
+
 ### Deployment 
 Para este passo, usaremos este Dockerfile:
 ```
