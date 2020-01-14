@@ -708,6 +708,11 @@ La salida debe ser similar a esta:
 
 ![gitlab](https://github.com/kdetony/devops/blob/master/Images/gitlab8.png "gitlab")
 
+OBS.
+* Si queremos cambiar el permisos en el "repositorio" :
+> Setting > Visibility, project features, permissions > Project visibility
+
+
 Hasta este punto, ya contamos con nuestro repositorio creado, vamos a proceder a configurar un usuario para que pueda trabajar en el repositorio creado.
 
 Nos ubicamos en la parte superior, y hacemos clic en la "llavecita" 
