@@ -835,8 +835,10 @@ Hacemos clic en **Construir**, y vemos la salida en la consola:
 
 ![maven](https://github.com/kdetony/devops/blob/master/Images/mvn1.png "Maven")
 
-
 En el servidor jenkins validar la ruta de descarga del proyecto.
+
+OBS.
+* La ruta a validar es: */var/lib/jenkins/workspace/job-ci*
 
 Ahora vamos a interactuar con maven, contruyendo codigo.
 
