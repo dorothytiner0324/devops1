@@ -407,17 +407,11 @@ apellido=$2
 echo "hola $nombre $apellido"
 ```
 
-Copiamos el script nuevamente al contendor, volvemos a "construir ahora" y validamos el resultado:
+Copiamos el script nuevamente al servidor, volvemos a "construir ahora" y validamos el resultado:
 
 ![job](https://github.com/kdetony/devops/blob/master/Images/salida2.png "Salida")
 
-OBS.
-
-* De esta forma de interactuan con scripts fuera de nuestro contenedor.
-
 Pues bien, ahora vamos a enviarle los **PARAMETROS** adecuados, para ello, vamos a crear un nuevo JOB de nombre: **parameter**, y hacemos check en la opcion **"esta ejecucion debe parametrizarse"**
-
-#![job](https://github.com/kdetony/devops/blob/master/Images/job6.png "Job")
 
 En añadir parametro, escogemos "parametro de cadena"
 ```
