@@ -1004,5 +1004,39 @@ pipeline {
 Guardamos y procedemos a ejecutarlo
 
 ### En el Servidor Docker
-* Validamos la salida de nuestro script
+* Validamos la salida de nuestro script y el resultado del jar.
+* Tener en cuenta que la salida debe visualizarse desde el contenedor creado ojo !!!
 
+OBS.
+* En caso de demorar mucho la validacion, vamos a recurrir a este "salvavidas" : 
+* En el servidor jenkins: /tmp/deploy, vamos a crear este archivo de nombre: **prueba.java** con este contenido:
+```
+public class prueba {
+public static void main(String[] args){
+System.out.println("Salvavidas por si algo falla");
+ }
+}
+```
+> javac -d . prueba.java
+
+* Tendremos los sgts archivos generados:
+```
+prueba.class |  prueba.java
+```
+
+* Creamos el archivo **manifest.mf** con el siguiente contenido:
+```
+Manifest-Version: 1.0
+
+Created-By: Anthony Mogrovejo
+
+Main-Class: prueba
+```
+
+* Ejecutamos: 
+> jar cfm prueba.jar manifest.mf prueba.class
+
+* Validamos la salida del jar previamente:
+> java -jar prueba.jar
+
+* Modificamos el script, para que solo envie **prueba.jar** al servidor docker. 
