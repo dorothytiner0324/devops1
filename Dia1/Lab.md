@@ -819,7 +819,7 @@ Validamos el codigo que acabamos de subir:
 
 ### Jenkins con Maven 
 
-* En Jenkins instalamos el plugin para maven ( maven integration )
+* En Jenkins instalamos el plugin para maven ( **maven integration + maven invoker** )
 
 * Validar que el plugin de git se encuentre instalado.
 
