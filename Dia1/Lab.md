@@ -983,7 +983,7 @@ pipeline {
 
    stage('Deploy') {
             steps {
-                dir ('/var/lib/jenkins/app') {
+                dir ('/tmp/deploy') {
     	     sh './deploy.sh'
                 }
          }
