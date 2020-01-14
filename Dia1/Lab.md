@@ -867,7 +867,7 @@ La salida debe ser similar a esta:
 OBS.
 * Imagen **REFERENCIAL** :)
 
-* Todo esto se ejecuta en: **/var/lib/jenkins/workspace/job1/target/my-app-1.0-SNAPSHOT.jar**
+* Todo esto se ejecuta en: **/var/lib/jenkins/workspace/job-ci/target/my-app-1.0-SNAPSHOT.jar**
 
 Vamos a realizar un **test** para comprobar nuestro jar creado, para ello solo basta agregar una nueva tarea:
 
