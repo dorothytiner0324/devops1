@@ -840,10 +840,9 @@ En el servidor jenkins validar la ruta de descarga del proyecto.
 
 Ahora vamos a interactuar con maven, contruyendo codigo.
 
-Vamos a configurar Maven: **Administrar Jenkins/Global Tool Configuration**
+Vamos a **validar** la configuracion de Maven en Jenkins para ello: 
 
-![maven](https://github.com/kdetony/devops/blob/master/Images/mvn2.png "Maven")
-
+> Administrar Jenkins/Global Tool Configuration
 
 Vamos a modificar el job **job-ci** para que interactúe con Maven, para lo cual escogemos la opcion: **Ejecutar tareas 'maven' de nivel superior**
 
