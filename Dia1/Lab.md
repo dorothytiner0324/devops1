@@ -966,20 +966,20 @@ FROM java:8
 WORKDIR /app
 COPY my-app-1.0-SNAPSHOT.jar /app/my-app-1.0-SNAPSHOT.jar
 EXPOSE 8080
-CMD java - jar my-app-1.0-SNAPSHOT.jar
+CMD ["java - jar my-app-1.0-SNAPSHOT.jar"]
 ```
 * Dentro de la carpeta deploy creamos el script de nombre *deploy.sh*, con el siguiente contenido:
 ```sh
 #!/bin/bash
-DIR=/var/lib/jenkins/workspace/job1/target
-HOST="IP_SERVER_DOCKER"
+DIR=/var/lib/jenkins/workspace/job-ci/target
+HOST="157.245.249.231"
 
-cp $DIR/my-app-1.0-SNAPSHOT.jar /tmp/deploy 
-ssh root@HOST mkdir -p /tmp/app
-scp *.jar Dockerfile root@HOST:/tmp/app 
+ssh root@$HOST 'mkdir -p /tmp/app'
+scp $DIR/my-app-1.0-SNAPSHOT.jar root@$HOST:/tmp/app/
+scp Dockerfile root@$HOST:/tmp/app/
 
-ssh root@HOST cd /tmp/app; docker build -t imgjar
-ssh root@HOST cd /tmp/app; docker run -dit -p 7070:8080 --name webjar imgjar
+ssh root@$HOST 'cd /tmp/app; docker build -t imgjar .'
+ssh root@$HOST 'cd /tmp/app; docker run -dit -p 7070:8080 --name webjar imgjar'
 ```
 
 * Ahora creamos un pipeline, el nombre será: testpipe 
