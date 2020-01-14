@@ -953,35 +953,8 @@ El artefacto JAR creado se encuentra en: **/var/lib/jenkins/workspace/job1/targe
 
 ### En el servidor Jenkins
 
-* Instalar los plugins: docker, docker build step, docker compose build step
-
-
-### En el Servidor Docker
-
-Antes de empezar a trabajar con lo que será nuestro primer pipeline, debemos realizar estas acciones en el servidor docker:
-
-> mkdir -p /etc/systemd/system/docker.service.d
-
-> vim startup_options.conf
-```
-[Service]
-ExecStart=
-ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376
-```
-> systemctl daemon-reload
-
-> systemctl restart docker 
-
-OBS.
-* Tambien se puede crear un archivo de nombre **daemon.json** en /etc/docker con el sgt contenido:
-```
-{
- "hosts": ["tcp:0.0.0.0:2375"] 
-}
-```
-
-### Deployment 
-Para este passo, usaremos este Dockerfile:
+* En /tmp vamos a crear la carpeta *deploy* 
+* A su vez, tambien crearemos un Dockerfile con el siguiente contenido:
 ```
 FROM java:8
 WORKDIR /app
@@ -989,3 +962,36 @@ COPY my-app-1.0-SNAPSHOT.jar /app/my-app-1.0-SNAPSHOT.jar
 EXPOSE 8080
 CMD java - jar my-app-1.0-SNAPSHOT.jar
 ```
+* Dentro de la carpeta deploy creamos el script de nombre *deploy.sh*, con el siguiente contenido:
+```sh
+#!/bin/bash
+DIR=/var/lib/jenkins/workspace/job1/target
+HOST="IP_SERVER_DOCKER"
+
+cp $DIR/my-app-1.0-SNAPSHOT.jar /tmp/deploy 
+ssh root@HOST mkdir -p /tmp/app
+scp *.jar Dockerfile root@HOST:/tmp/app 
+
+ssh root@HOST cd /tmp/app; docker build -t imgjar
+ssh root@HOST cd /tmp/app; docker run -dit -p 7070:8080 --name webjar imgjar
+```
+
+* Ahora creamos un pipeline, el nombre será: testpipe 
+```
+pipeline { 
+  agent any 
+
+   stage('Deploy') {
+            steps {
+                dir ('/var/lib/jenkins/app') {
+    	     sh './deploy.sh'
+                }
+         }
+  }
+```
+
+Guardamos y procedemos a ejecutarlo
+
+### En el Servidor Docker
+* Validamos la salida de nuestro script
+
