@@ -480,7 +480,7 @@ Y en la ejecución:
 
 ### Jenkins hacia un Contenedor 
 
-Como paso inicial, vamos a crear un usuario de nombre **docker** en el servidor docker.
+Como paso inicial, vamos a crear un usuario de nombre **deploy** en el servidor docker.
 
 Nos conectamos a nuestro servidor Docker y en la ruta: /home/docker, vamos a crear la carpeta **app** ( dentro la carpeta app crearemos nuestro archivo Dockerfile )
 
