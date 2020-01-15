@@ -9,15 +9,18 @@ OBS.
 * ssh-keygen -t rsa
 * Copy id_rsa.pub root a /var/lib/jenkins/.shh
 * Los permisos para los archivos:
- ```sh
+```sh
  jenkins: id_rsa     | -rw-------.
  jenkins: id_rsa.pub | -rw-r--r--.
- ```
+```
  TIP:
 ```sh
 cat id_rsa.pub > /var/lib/jenkins/.ssh/id_rsa.pub
 cat id_rsa > /var/lib/jenkins/.ssh/id_rsa
 ```
+* En el servidor Gitlab, vamos a crear el proyecto: hello-world ( de libre acceso ) 
+* En Repo_Maven se encuetra el **comprimido hello-world.tar.gz**, descomprimirlo y subirlo al proyecto: **hello-world**
+
 
 # Scripts
 0. Creamos la carpeta **/var/lib/jenkins/app**, y aqui estarán todos los scripts.
@@ -31,7 +34,7 @@ echo "########"
 
 rm -rf /tmp/hello-world
 cd /tmp
-git clone https://github.com/yankils/hello-world.git
+git clone https://IP_SERVER_DOCKER:PORT/hello-world.git
 cd hello-world
 /opt/maven/bin/mvn package
 ```
