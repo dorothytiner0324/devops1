@@ -972,7 +972,7 @@ CMD ["java - jar my-app-1.0-SNAPSHOT.jar"]
 ```sh
 #!/bin/bash
 DIR=/var/lib/jenkins/workspace/job-ci/target
-HOST="157.245.249.231"
+HOST="IP_SERVER_DOCKER"
 
 ssh root@$HOST 'mkdir -p /tmp/app'
 scp $DIR/my-app-1.0-SNAPSHOT.jar root@$HOST:/tmp/app/
