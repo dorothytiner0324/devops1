@@ -15,13 +15,14 @@ Esta herramienta, proviene de otra similar llamada Hudson, ideada por Kohsuke Ka
 
 1. Confirmar version de Java y JAVA_HOME
    ```sh
-   java -version
-   find /usr/lib/jvm/java-1.8* | head -n 3
-   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.XXXX.el8_0.x86_64
-   export JAVA_HOME
-   PATH=$PATH:$JAVA_HOME
-    # Para hacerlo permanente, debemos agregarlo en .bash_profile para un usuario determinado, ejm. root, sysadmin, etc
-   vi ~/.bash_profile
+   0. En la consola ejecutamos:
+   1. java -version
+   2. find /usr/lib/jvm/java-1.8* | head -n 3
+   3. JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.XXXX.el8_0.x86_64
+   4.  export JAVA_HOME
+   5. PATH=$PATH:$JAVA_HOME
+    # Para hacerlo permanente, debemos agregarlo en .bashrc(pasos 1,2,3,4,5) para un usuario determinado, ejm. root, sysadmin, etc
+   vi ~/.bashrc
    ```
    _La salida de lo ejecutado anteriormente sera:_
     ```sh
