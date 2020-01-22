@@ -1,0 +1,7 @@
+kubectl apply -f https://k8s.io/examples/application/shell-demo.yaml
+kubectl get pod shell-demo
+kubectl exec -it shell-demo -- /bin/bash
+apt-get update
+apt-get install -y procps lsof
+ps aux | grep nginx
+echo "Hola Plug!!! Page demo" > /usr/share/nginx/html/index.html
