@@ -47,3 +47,14 @@ f. configurar usuario jenkins en **credentials**
 Name: Ansible2.9.x
 PATH: /usr/local/bin
 ```
+
+### OBS.
+
+1. Para el servidor Jenkins, debemos hacer un cambio en **/etc/passwd** para el usuario jenkins, es decir de *false* a *bash*
+para que pueda realizar conexiones ssh. 
+
+2. Nos dirigimos a /var/lib/jenkins/.ssh para copiar id_rsa.pub al archivo authorized_keys
+
+> cat id_rsa.pub > authorized_keys 
+
+> chmod 600 authorized_keys
