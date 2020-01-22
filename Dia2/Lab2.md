@@ -154,7 +154,57 @@ Es un software de infraestructura como código (infrastructure as code) desarrol
 
 Con Terraform ya instalado, vamos a proceder a crear todo el ambiente necesario para desplegar nuestro cluster: 
 
-Copiamos todos los archivos TF que tenemos en nuestra carpeta **REFS/Terraform/Infra**
+Copiamos todos los archivos TF que tenemos en nuestra carpeta **REFS/Terraform/Infra** en nuestro **servidor Jenkins** 
+en la ruta **/root/infra** y los archivos de **REFS/Terraform/App**  a **/root/app** 
+
+Instalación
+============= 
+
+> wget https://releases.hashicorp.com/terraform/0.12.19/terraform_0.12.19_linux_amd64.zip
+
+> yum -y install unzip 
+
+> unzip terraform_0.12.19_linux_amd64.zip
+
+> mv terraform /usr/local/bin 
+
+Configuracion de Token Digital Ocean
+=============================
+
+Para realizar la configuracion de nuestro Token, nos ubicamos en esta parte de nuestro dashboard en digital ocean
+
+![kubernetes](https://github.com/kdetony/devops/blob/master/Images/k8s9.png "k8s")
+
+En esta pantalla rellenamos los campos como visualizamos:
+
+![kubernetes](https://github.com/kdetony/devops/blob/master/Images/k8s10.png "k8s")
+
+Y anotamos nuestro Token generado:
+
+![kubernetes](https://github.com/kdetony/devops/blob/master/Images/k8s11.png "k8s")
+
+Finalizamos ejecutando este pequeño script de nombre **token.sh** en nuestra consola:
+```sh
+#!/bin/bash
+export DIGITALOCEAN_TOKEN='TOKEN_GENERADO'
+``` 
+
+Infraestructura como Código
+=============================
+
+Ahora, regresamos a nuestra carpeta **/root/infra** y vamos a ejecutar lo siguiente:
+
+> terraform init 
+
+> terraform plan 
+
+### OBS.
+
+* En caso de solicitar el token de DigitalOcean, lo ingresamos sin problema ;) 
+
+> terraform apply 
+
+
 
 
 
