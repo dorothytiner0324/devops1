@@ -963,6 +963,15 @@ El artefacto JAR creado se encuentra en: **/var/lib/jenkins/workspace/job-ci/tar
 
 * En el servidor jenkins crear llaves ssh y copiarlas en el servidor docker.
 
+* Como recomendacion en el servidor Jenkins, quien es el que se conectará de ahora en adelante a todos los servidores con los que trabajemos, demos copiar cualquier llave SSH para cualquier usario hacia los servidores destino, una forma de copiado de llaves SSH puede ser esta: 
+
+> ssh-copy-id -i id_rsa.pub  root@IP_SERVER 
+
+* Se recomienda tambien trabajar con "alias" para los servidores, esta actividad es opcional, y de realizarse se debe modificar el archivo **/etc/hosts** el cual debe quedar de esta manera:
+```
+IP_SRV_DOCKER srvdocker
+IP_SERVER_JENKINS srvjenkins
+```
 * A su vez, tambien crearemos un Dockerfile con el siguiente contenido:
 ```
 FROM java:8
