@@ -618,7 +618,11 @@ OBS.
 
 ## Introducción a Gitlab 
 
-Vamos a crear un contenedor GitLab e integrarlo con Jenkins :)  ( docker-compose.yml se creará en */home/deploy/gitlab* )
+0. Creamos el usuario deploy
+
+> useradd deploy
+
+1. Vamos a crear un contenedor GitLab e integrarlo con Jenkins :)  ( docker-compose.yml se creará en */home/deploy/gitlab* )
 
 docker-compose.yml
 ```
@@ -632,9 +636,9 @@ services:
       - "8888:80"
       - "4421:22"
     volumes:
-      - "/home/docker/gitlab/config:/etc/gitlab"
-      - "/home/docker/gitlab/logs:/var/log/gitlab"
-      - "/home/docker/docker/gitlab/data:/var/opt/gitlab"
+      - "/home/deploy/gitlab/config:/etc/gitlab"
+      - "/home/deploy/gitlab/logs:/var/log/gitlab"
+      - "/home/deploy/docker/gitlab/data:/var/opt/gitlab"
     image: gitlab/gitlab-ce
     networks:
       - net
