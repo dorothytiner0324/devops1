@@ -775,7 +775,7 @@ OBS.
 
 * Reemplazaar el nombre del dominio por: **IP_SERVER_DOCKER:8888**
 
-En nuestra consola en /tmp, vamos a ejecutar:
+En nuestra consola en el directorio **/tmp**, vamos a ejecutar:
 ```
 git clone http://IP_SERVER_DOCKER:8888/devapp/maven.git
 
@@ -790,9 +790,10 @@ git clone http://IP_SERVER_DOCKER:8888/devapp/maven.git
 
 * Para ambos casos realizar previamente git clone del repositorio.
 
-Vamos ahora clonar otro directorio y subirlo al nuestro, para ello vamos a realizar lo sgt:
+Vamos ahora clonar un repositorio externo y subirlo al nuestro, para ello vamos a realizar lo sgt en el servidor Jenkins, en la ruta **/tmp/** 
 
 > git clone https://github.com/jenkins-docs/simple-java-maven-app.git
+
 
 Ahora, vamos a copiar el contenido del directorio **simple-java-maven-app** a **maven**
 
@@ -825,9 +826,9 @@ Validamos el codigo que acabamos de subir:
 
 * En Jenkins instalamos el plugin para maven ( **maven integration + maven invoker** )
 
-* Validar que el plugin de git se encuentre instalado.
+* Validar que el plugin de **gitlab** se encuentre instalado.
 
-* Creamos un nuevo **proyecto**: job-ci
+* Creamos un nuevo **proyecto**: job-ci > proyecto de estilo libre
   
 * Crear el usuario "kratos" en Jenkins. ( este es el usuario de gitlab )
 
