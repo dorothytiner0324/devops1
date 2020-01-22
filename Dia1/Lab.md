@@ -961,8 +961,6 @@ El artefacto JAR creado se encuentra en: **/var/lib/jenkins/workspace/job-ci/tar
 * En /tmp vamos a crear la carpeta *deploy* 
 > chown -R jenkins.jenkins /tmp/deploy
 
-> chmod +x deploy.sh
-
 * En el servidor jenkins crear llaves ssh y copiarlas en el servidor docker.
 
 * A su vez, tambien crearemos un Dockerfile con el siguiente contenido:
@@ -986,6 +984,8 @@ scp Dockerfile root@$HOST:/tmp/app/
 ssh root@$HOST 'cd /tmp/app; docker build -t imgjar .'
 ssh root@$HOST 'cd /tmp/app; docker run -dit -p 7070:8080 --name webjar imgjar'
 ```
+
+> chmod +x deploy.sh
 
 * Ahora creamos un pipeline, el nombre será: testpipe 
 ```
