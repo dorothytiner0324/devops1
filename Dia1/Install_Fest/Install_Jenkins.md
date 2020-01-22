@@ -18,7 +18,7 @@ Esta herramienta, proviene de otra similar llamada Hudson, ideada por Kohsuke Ka
    0. En la consola ejecutamos los siguientes comandos,uno acontinuación de otro:
    1. java -version
    2. find /usr/lib/jvm/java-1.8* | head -n 3
-   3. JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.XXXX.el8_0.x86_64
+   3. JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
    4. export JAVA_HOME
    5. PATH=$PATH:$JAVA_HOME
    
