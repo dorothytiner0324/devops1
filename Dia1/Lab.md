@@ -975,10 +975,9 @@ IP_SERVER_JENKINS srvjenkins
 * A su vez, tambien crearemos un Dockerfile con el siguiente contenido:
 ```
 FROM java:8
-WORKDIR /app
 COPY my-app-1.0-SNAPSHOT.jar /app/my-app-1.0-SNAPSHOT.jar
-EXPOSE 8080
-CMD ["java - jar my-app-1.0-SNAPSHOT.jar"]
+WORKDIR /app
+CMD ["java","-jar","my-app-1.0-SNAPSHOT.jar"]
 ```
 * Dentro de la carpeta deploy creamos el script de nombre *deploy.sh*, con el siguiente contenido:
 ```sh
@@ -991,7 +990,7 @@ scp $DIR/my-app-1.0-SNAPSHOT.jar root@$HOST:/tmp/app/
 scp Dockerfile root@$HOST:/tmp/app/
 
 ssh root@$HOST 'cd /tmp/app; docker build -t imgjar .'
-ssh root@$HOST 'cd /tmp/app; docker run -dit -p 7070:8080 --name webjar imgjar'
+ssh root@$HOST 'cd /tmp/app; docker run -dit --name webjar imgjar'
 ```
 
 > chmod +x deploy.sh
@@ -1015,8 +1014,23 @@ pipeline {
 }
 ```
 
-Guardamos y procedemos a ejecutarlo
+* Antes de ejecutar, validar la correcta ejecucion del script, para ello ejecutarlo con el usuario **jenkins**
 
+* Ahora SI, guardamos y procedemos a ejecutarlo
+
+### OBS.
+en el caso de obtener en el mensaje :
+```
+Host key verification failed.
+```
+
+* Debemos copiar el id_rsa* del usuario root a /var/lib/jenkins/.ssh
+> su - jenkins -s/bin/bash
+> ssh-keygen -t rsa
+> rm -fv /var/lib/jenkins/.ssh/*
+> cp -r /root/.ssh/id_rsa* /var/lib/jenkins/.ssh    
+> chown -R jenkins.jenkins /var/lib/jenkins/.ssh
+ 
 ### En el Servidor Docker
 * Validamos la salida de nuestro script y el resultado del jar.
 * Tener en cuenta que la salida debe visualizarse desde el contenedor creado ojo !!!
