@@ -11,17 +11,18 @@ En el archivo ansible.cfg, realizamos la sgt modificacion:
 > inventory  = /var/lib/jenkins/ansible/hosts
 
 A su vez, vamos a crear el archivo **hosts** con el siguiente contenido:
-
+```
 [all]
 IP_SERVER_DOCKER
 IP_SERVER_JENKINS
 
 [nodos]
 IP_SERVER_DOCKER
+```
 
 OBS.
 
-* la carpeta ansible tiene que tener como owner al usuario jenkins. 
+* La carpeta ansible tiene que tener como owner al usuario jenkins. 
 
 Ahora, con estas configuraciones, en el servidor Jenkins, donde tenemos instalado Ansible, vamos a ejecutar lo siguiente:
 
@@ -52,13 +53,10 @@ Lo ejecutamos:
 
 Validamos en los servidores en la carpeta /tmp la ejecucion del playbook.
 
-Lo que ahora ahora, sera realizarlo desde Jenkins, para ello, vamos a crear un job de nombre ansible / Proyecto de estilo Libre
+Lo que ahora ahora, sera realizarlo desde Jenkins, para ello, vamos a crear un job de nombre ansible / Proyecto de estilo Libre / Ejecutar / Invoke ansible playbook 
 
 Actividad
 ===============
 
 1. ¿Qué ocurriria si creamos un repositorio y subimos en el nuestro playbook + hosts?
 2. En Jenkins, en la opcion: "Fuentes de repositorios" agregar el repositorio.
-
-
-
