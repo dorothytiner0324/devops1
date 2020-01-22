@@ -10,7 +10,7 @@ Esta herramienta, proviene de otra similar llamada Hudson, ideada por Kohsuke Ka
 ## Instalando Java
 1. Instalamos Java (openjdk)
    ```
-   yum install java-1.8*
+   yum install java-1.8* -y
    ```
 
 1. Confirmar version de Java y JAVA_HOME
@@ -22,7 +22,7 @@ Esta herramienta, proviene de otra similar llamada Hudson, ideada por Kohsuke Ka
    4. export JAVA_HOME
    5. PATH=$PATH:$JAVA_HOME
    
-   # Para hacerlo permanente, debemos agregarlo en .bashrc(pasos 1,2,3,4,5) para un usuario determinado, ejm. root, sysadmin, etc
+   # Para hacerlo permanente, debemos agregarlo en .bashrc para un usuario determinado, ejm. root, sysadmin, etc
    6. vi ~/.bashrc
       JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
       export JAVA_HOME
