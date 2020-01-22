@@ -55,6 +55,10 @@ Validamos en los servidores en la carpeta /tmp la ejecucion del playbook.
 
 Lo que ahora ahora, sera realizarlo desde Jenkins, para ello, vamos a crear un job de nombre ansible / Proyecto de estilo Libre / Ejecutar / Invoke ansible playbook 
 
+La salida debe ser similar a esta:
+
+![ansible](https://github.com/kdetony/devops/blob/master/Images/ansible.png "Ansible")
+
 Actividad
 ===============
 
