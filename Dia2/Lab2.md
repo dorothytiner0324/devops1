@@ -64,3 +64,28 @@ Actividad
 
 1. ¿Qué ocurriria si creamos un repositorio y subimos en el nuestro playbook + hosts?
 2. En Jenkins, en la opcion: "Fuentes de repositorios" agregar el repositorio.
+
+Para realizar esta actividad y ver el proceso de CI Jenkins/Ansible/Gitlab
+
+Creamos en gitlab:
+```
+Group: ICA
+Project: ANSBILE
+```
+**El proyecto y grupo deben ser publicos**
+
+En el servidor Jenkins, con el usuario *jenkins* vamos a clonar el repositorio creado en */tmp*
+
+En la carpeta clonada, vamos a copiar, hosts y ejemplo.yml, posterior a ello lo subiermos al repositorio.
+
+> git add
+
+> git commit -m 'archivos ansible'
+
+> git push
+
+* Crear un job en jenkins de nombre: test-ci para realizar la ejecucion del playbook.
+
+Introduccion a Ansible
+=======================
+
