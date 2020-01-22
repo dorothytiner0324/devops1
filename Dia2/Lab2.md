@@ -86,6 +86,7 @@ En la carpeta clonada, vamos a copiar, hosts y ejemplo.yml, posterior a ello lo 
 
 * Crear un job en jenkins de nombre: test-ci para realizar la ejecucion del playbook.
 
-Introduccion a Ansible
+Introduccion a Kubernetes
 =======================
+
 
