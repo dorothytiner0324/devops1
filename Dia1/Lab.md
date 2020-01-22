@@ -1025,10 +1025,15 @@ Host key verification failed.
 ```
 
 * Debemos copiar el id_rsa* del usuario root a /var/lib/jenkins/.ssh
+
 > su - jenkins -s/bin/bash
+
 > ssh-keygen -t rsa
+
 > rm -fv /var/lib/jenkins/.ssh/*
+
 > cp -r /root/.ssh/id_rsa* /var/lib/jenkins/.ssh    
+
 > chown -R jenkins.jenkins /var/lib/jenkins/.ssh
  
 ### En el Servidor Docker
