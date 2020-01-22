@@ -954,7 +954,7 @@ Acontinuación vamos a crear el **JAR** para nuestro aplicativo de ejemplo.
 ### Creacion de JAR 
 Vamos a trabar con el aplicativo que ya hemos visto anteriormente: **simple-java-maven-app**
 
-El artefacto JAR creado se encuentra en: **/var/lib/jenkins/workspace/job1/target/my-app-1.0-SNAPSHOT.jar** (servidor Jenkins)
+El artefacto JAR creado se encuentra en: **/var/lib/jenkins/workspace/job-ci/target/my-app-1.0-SNAPSHOT.jar** (servidor Jenkins)
 
 ### En el servidor Jenkins
 
