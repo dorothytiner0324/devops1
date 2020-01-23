@@ -227,6 +227,7 @@ Si queremos trabajar de forma "nativa" con el archivo kubeconfig.yaml realizamos
 
 * Ejecutar un archivo yaml 
 > kubectl apply -f file.yml
+
 > kubectl apply -f /DIR/
 
 * Listar Nodos:
