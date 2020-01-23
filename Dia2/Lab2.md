@@ -211,6 +211,25 @@ Con el archivo **kubeconfig.yaml** descargado, vamos ahora validar nuestro acces
 
 > kubectl config --kubeconfig=kubeconfig.yaml get nodes
 
+## Comandos a usar
+
+* Listar todos los componentes para kubernetes
+> kubectl get all 
+
+* Ejecutar un archivo yaml 
+> kubectl apply -f file.yml
+> kubectl apply -f /DIR/
+
+* Listar Nodos:
+  * kubectl get nodes
+  * kubectl get nodes -o wide 
+
+* Listar Namespaces:
+  * kubectl get ns 
+
+* Listart Servicios:
+  * kubectl get svc
+
 Terminologia
 ===============
 
