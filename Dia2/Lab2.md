@@ -303,15 +303,20 @@ Para validarlo, desde un nodo:
 
 
 ## LABELS
-sirve para cualquier objeto de k8s, añade una clave y valor a un objeto, con el objetivo de identificar pods ()
+sirve para cualquier objeto de k8s, añade una clave y valor a un objeto, con el objetivo de identificar pods () ejm::
 ```
-ejm:
 apiVersion: v1
 kind: Pod
-metada:
-………..
+metada:apiVersion: v1
+kind: Pod
+metadata:
+  name: dbmongo
+spec:
+  containers:
+  - image: mongo
+    name: dbmongo ejm:
     labels:
-       pod-template: “mypod”
+       pod-template: "mypod"
        run: nginx 
 ```
 
@@ -328,9 +333,7 @@ Si queremos buscar LABELs y mostrarlos en nuevas columnas:
 > kubectl get pods -Lrun
 
 ## REPLICA-CONTROLLER (replicaset)
-nos permite tener tantas “replicas” de un POD que necesitemos ejecutar.
-
-ejm.
+nos permite tener tantas **"replicas"** de un POD que necesitemos ejecutar, ejm. :
 ```
 apiVersion: extensions/v1beta1
 kind: ReplicaSet
@@ -353,20 +356,23 @@ name: webnginx
 ```
 
 para aplicarlo:
+
 > kubectl apply -f rs.yml 
 
 ojo también se puede usar:
-> kubectl create -f rs.yml
-de esta forma, no se puede editar directamente el manifesto…. y a parte que no es muy usado.
 
-Si deseamos escalar los pods, por un tema de carga 
+> kubectl create -f rs.yml
+
+De esta forma, no se puede editar directamente el manifesto…. y a parte que no es muy usado. Si deseamos escalar los pods, por un tema de carga :
+
 > kubectl scale rs rs-nginx --replicas=5
 
 y para listar los pods en base a los replicaset
+
 > kubectl get pods --watch 
 
 ## DEPLOYMENT
-lo que nos permite un deployment:
+Lo que nos permite un deployment:
 - replica management
 - pod scaling
 - rolling updates - 0 downtime
@@ -493,13 +499,15 @@ deployment.extensions/webnginx rolled back
 ```
 
 si borramos el replicaset:
+
 > kubectl delete replicaset.apps/webnginx-5fdb9bd66b
 
 este se vuelve a regenerar debido a que el deployment se mantiene activo.
 
-OBS.
+### OBS.
 
 para que siempre guarde las actividades, hay que indicarlo:
+
 > kubectl run nginx --image=bitnami/nginx:1.12 --record
 
 para ver los logs de un pod en base a su label:
