@@ -442,42 +442,9 @@ dpnginx :                  nombre del contenedor
 Actividad
 ============
 
-Vamos a usar un ejemplo:
-
-> kubectl run dokuwiki --image=dokuwiki --record
-
-vemos el manifiesto creado:
-
-> kubectl get deployments dokuwiki -o yaml
-
-y listamos el estado del pod:
-
-> kubectl get pods
-
-si hacemos el update:
-
-> kubectl set image deployment/dokuwiki dokuwiki=bitnami/dokuwiki:09 --all
-
-Listamos el estado de los pod “actualizados”
-``` 
-kubectl get pods
-dokuwiki-fcbbf5844-rrmck        0/1     ErrImagePull   0          5s
-```
-
-Vemos que hay un error en la imagen, entonces recurrimos a un rollback
-
-para ellos vamos a listar los históricos:
-> kubectl rollout history deployment/dokuwiki
-
-y procedemos a realizar el rollback
-> kubectl rollout undo deployment/dokuwiki
-
-listamos ahora los pods
-> kubectl get pods
-
 Vamos a repasar los términos, para ello vamos a trabajar con la imagen de bitnami/nginx
 
-> kubectl run webnginx --image=bitnami/nginx:1.12 --record
+> kubectl run validateweb --image=bitnami/nginx:1.12 --record
 
 listamos los pods:
 > kubectl get pods
@@ -486,56 +453,59 @@ y listamos los deployments:
 > kubectl get deploy
 
 para listar/editar el deployment:
-> kubectl edit deploy/webnginx
+> kubectl edit deploy/validateweb
 
 si deseo listar los pods con labels
 > kubectl get pod --show-labels
 
 si deseo solo listar el pod en ejecución:
-> kubectl get pods -w -l run=webnginx
+> kubectl get pods -w -l run=validateweb
 
 escalemos en 8 replicas:
-> kubectl scale deploy/webnginx --replicas=8
+> kubectl scale deploy/validateweb --replicas=8
 
 *mirar la otra consola*
 
 y miramos los deployments:
+
 > kubectl get deploy
 
 si borramos un pod, vemos que se vuelve a crear, esto debido al replicaset que ha sido creado vía el deployment
 
 listo el historico :
-> kubectl rollout history deploy/webnginx
+> kubectl rollout history deploy/validateweb
 
 actualizamos la imagen:
-> kubectl set image deploy/webnginx webnginx=bitnami/nginx:1.14--all
+> kubectl set image deploy/validateweb validateweb=bitnami/nginx:1.14--all
 
 se presenta un error como se presenta, entonces hacemos el rollback
 
-> kubectl get rs -l run=webnginx
+> kubectl get rs -l run=validateweb
 
 antes de hacer el rollback vamos a dejar corriendo el estado del replicaset:
 
-> kubectl get rs -w -l run=webnginx
+> kubectl get rs -w -l run=validateweb
 ```
-kubectl rollout undo deploy/webnginx
-deployment.extensions/webnginx rolled back
+kubectl rollout undo deploy/validateweb
+deployment.extensions/validateweb rolled back
 ```
 
 si borramos el replicaset:
 
-> kubectl delete replicaset.apps/webnginx-5fdb9bd66b
+> kubectl get rs
 
-este se vuelve a regenerar debido a que el deployment se mantiene activo.
+> kubectl delete replicaset.apps/validateweb-5fdb9bd66b
+
+No se borra debido a que el deployment se mantiene activo.
 
 ### OBS.
 
-para que siempre guarde las actividades, hay que indicarlo:
+Para que siempre guarde las actividades, hay que indicarlo:
 
-> kubectl run nginx --image=bitnami/nginx:1.12 --record
+> kubectl run nginxtest --image=bitnami/nginx:1.12 --record
 
-para ver los logs de un pod en base a su label:
-> kubectl logs -f -l run=webnginx
+Para ver los logs de un pod en base a su label:
+> kubectl logs -f -l run=nginxtest
 
 
 CI Gitlab con Kubernetes
