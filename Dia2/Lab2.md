@@ -239,14 +239,18 @@ Si queremos trabajar de forma "nativa" con el archivo kubeconfig.yaml realizamos
 
 * Listart Servicios:
   * kubectl get svc
+  
+ **OBSERVACION**
+ ```
+ apiVersion: apps/v1, para k8s versiones antes 1.9.0 usar apps/v1beta2  
+ y antes de la version 1.8.0 usar: extensions/v1beta1
+ ``` 
 
 Terminologia
 ===============
 
 ## POD
-unidad mínima de k8s
-
-> pod.yml
+unidad mínima de k8s, vamos a crear el archivo **pod.yml**:
 ``` 
 apiVersion: v1
 kind: Pod
@@ -259,38 +263,47 @@ spec:
 ```
 
 ahora: 
+
 > kubectl apply -f pods.yml  
 
 Para listar los pods creados: 
+
 > kubectl get pods
 
 para ver información del pod:
+
 > kubectl describe pod dbmongo   
 
 tambien:  
+
 > kubectl get all && kubectl describe pod/dbmongo
 
 Podemos crear un POD de la siguiente manera:
+
 > kubectl run webnginx --image=nginx --restart=Never
 
 y listamos los pods:
+
 > kubectl get po y/o  pods
 
 Si nos olvidamos del manifiesto que creo un pod, podemos recurrir a:
+
 > kubectl get pod webnginx -o yaml  
 
-y/o  
+**y/o**
+
 > kubectl get pod/webnginx -o yaml
 
 para acceder el POD:
+
 > kubectl exec -it pod/webnginx bash  
 
 para poder ver el estado de nginx: 
 > curl $IP 
 
 si queremos exponer el puerto, esto se conocer como NodePort, para lo cual podemos realizar: 
-
 ( acceso desde la ip del NODO/MASTER ojo!  no es para exponer al mundo )
+
 > kubectl port-forward webnginx 80
 
 Para validarlo, desde un nodo:  
@@ -335,34 +348,35 @@ Para listar las etiquetas:
 
 Si queremos buscar LABELs y mostrarlos en nuevas columnas:
 > kubectl get pods -l foo=bar
+
 > kubectl get pods -Lrun
 
 ## REPLICA-CONTROLLER (replicaset)
-nos permite tener tantas **"replicas"** de un POD que necesitemos ejecutar, ejm. :
+Nos permite tener tantas **"replicas"** de un POD que necesitemos ejecutar, ejm. vamos a crear el archivo **rc.yml**
 ```
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-   name: rs-nginx
-   namespace: default
+  name: wnginx
+  namespace: default
 spec:
-   replicas: 3
-   selector:
-        matchLabels:
-            app: appnginx  #de esta manera k8s sabe como aplicar las mismas acciones a los mismos POD
-    template:
-         metadata:
-       labels:
-          app: appnginx
-      spec:
-           containers:
-image: nginx
-name: webnginx 
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wnginx
+  template:
+    metadata:
+      labels:
+        app: wnginx
+    spec:
+      containers:
+        - image:  nginx
+          name:  nginx
 ```
 
 para aplicarlo:
 
-> kubectl apply -f rs.yml 
+> kubectl apply -f rc.yml 
 
 ojo también se puede usar:
 
@@ -370,7 +384,7 @@ ojo también se puede usar:
 
 De esta forma, no se puede editar directamente el manifesto…. y a parte que no es muy usado. Si deseamos escalar los pods, por un tema de carga :
 
-> kubectl scale rs rs-nginx --replicas=5
+> kubectl scale rs wnginx --replicas=5
 
 y para listar los pods en base a los replicaset
 
@@ -384,41 +398,39 @@ Lo que nos permite un deployment:
 - rollback 
 - clean-up policies
 
-ejemplo:
+Creamos el archivo **deploy.yml**
 ```
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deploy-nginx
-  namespace: default
+  name: dp-nginx
 spec:
-  revisionHistoryLimit: 5              #cuantos rollbacks podemos hacer
-  strategy:
-     type: RollingUpdate
-  replicas: 3
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dp-nginx
   template:
-     metadata:
-       labels:
-         app: web-nginx
-     spec:
-       containers:
-       - image: nginx
-         name: webnginxprd
-         ports:
-         - name: http
-           containerPort: 8080
+    metadata:
+      labels:
+        app: dp-nginx
+    spec:
+      containers:
+      - name:  dpnginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
 ```
 
 lo aplicamos
-> kubectl apply -f deployment.yml
+> kubectl apply -f deploy.yml
 
 si queremos escalar el deployment:
-> kubectl scale deployment deploy-nginx --replicas=4
+> kubectl scale deploy dp-nginx --replicas=4
 
 Si queremos listar los deployments
 > kubectl get deployments
 
-Ahora, como se mencionó podemos hacer updates en “caliente” de la sgt forma:
+Ahora, como se mencionó podemos hacer updates en "caliente" de la sgt forma:
 > kubectl set image deployment.apps/deploy-nginx webnginxprd=nginx:1.16.1 --all
 
 #### OBS:
