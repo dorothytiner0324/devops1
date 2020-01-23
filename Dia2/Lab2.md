@@ -211,6 +211,15 @@ Con el archivo **kubeconfig.yaml** descargado, vamos ahora validar nuestro acces
 
 > kubectl config --kubeconfig=kubeconfig.yaml get nodes
 
+### OBS.
+Si queremos trabajar de forma "nativa" con el archivo kubeconfig.yaml realizamos la sgt configuración: 
+
+> mkdir -p $HOME/.kube
+
+> mv kubeconfig.yaml  $HOME/.kube/config
+
+> kubectl get pods 
+
 ## Comandos a usar
 
 * Listar todos los componentes para kubernetes
