@@ -303,29 +303,34 @@ Para validarlo, desde un nodo:
 
 
 ## LABELS
-sirve para cualquier objeto de k8s, añade una clave y valor a un objeto, con el objetivo de identificar pods () ejm::
+sirve para cualquier objeto de k8s, añade una *clave y valor a un objeto*, con el objetivo de identificar pods () ejm. vamos a crear el archivo **label.yml**
 ```
 apiVersion: v1
 kind: Pod
-metada:apiVersion: v1
-kind: Pod
 metadata:
-  name: dbmongo
+  name: webnginx-label 
+  labels:
+      name: webnginx-label 
+      pod-template: "mypodweb"
+      run: nginx
+
 spec:
   containers:
-  - image: mongo
-    name: dbmongo ejm:
-    labels:
-       pod-template: "mypod"
-       run: nginx 
+  - image: nginx
+    name:  webnginx-label 
+
 ```
 
 Para ejecutarlo de forma manual
-> kubectl label pods nginx foo=bar 
 
-desventaja:  si se borra, se pierde el label ojo !!! 
+> kubectl apply -f label.yml
+
+> kubectl label pods webnginxlabel foo=bar 
+
+**Desventaja:**  si se borra, se pierde el label ojo !!! 
 
 Para listar las etiquetas:
+
 > kubectl get pods --show-labels 
 
 Si queremos buscar LABELs y mostrarlos en nuevas columnas:
