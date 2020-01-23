@@ -435,20 +435,27 @@ Ahora, como se mencionó podemos hacer updates en "caliente" de la sgt forma:
 
 #### OBS:
 ```
-deployment.apps/deploy-nginx : nombre del deployment
-webnginxprd : nombre del contenedor
+deployment.apps/dp-nginx : nombre del deployment
+dpnginx :                  nombre del contenedor
 ```
 
+Actividad
+============
+
 Vamos a usar un ejemplo:
+
 > kubectl run dokuwiki --image=dokuwiki --record
 
 vemos el manifiesto creado:
+
 > kubectl get deployments dokuwiki -o yaml
 
 y listamos el estado del pod:
+
 > kubectl get pods
 
 si hacemos el update:
+
 > kubectl set image deployment/dokuwiki dokuwiki=bitnami/dokuwiki:09 --all
 
 Listamos el estado de los pod “actualizados”
@@ -457,7 +464,7 @@ kubectl get pods
 dokuwiki-fcbbf5844-rrmck        0/1     ErrImagePull   0          5s
 ```
 
-vemos que hay un error en la imagen, entonces recurrimos a un rollback
+Vemos que hay un error en la imagen, entonces recurrimos a un rollback
 
 para ellos vamos a listar los históricos:
 > kubectl rollout history deployment/dokuwiki
