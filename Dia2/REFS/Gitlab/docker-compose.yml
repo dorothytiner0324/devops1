@@ -1,0 +1,32 @@
+version: '3'
+services:
+  git:
+    container_name: git-server
+    hostname: 167.172.197.61
+    ports:
+      - "443:443"
+      - "80:80"
+      - "4421:22"
+    volumes:
+      - "/home/deploy/gitlab/config:/etc/gitlab"
+      - "/home/deploy/gitlab/logs:/var/log/gitlab"
+      - "/home/deploy/gitlab/data:/var/opt/gitlab"
+    image: gitlab/gitlab-ce
+    restart: always
+    networks:
+      - net
+ 
+  runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: git-runner
+    ports:
+      - "8093:8093"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/deploy/gitlab/runner-config:/etc/gitlab-runner
+    restart: always
+    networks:
+      - net   
+
+networks:
+  net:
