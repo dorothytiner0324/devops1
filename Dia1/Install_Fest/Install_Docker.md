@@ -16,4 +16,22 @@ Para validar la versión de docker:
 Y si queremos saber otro tipo de recursos:
 
 > docker info
+```
+cat /etc/docker/daemon.json
+ {"hosts": ["tcp://0.0.0.0:2375", "unix:///var/run/docker.sock"]}
+ 
+ mkdir -p /etc/systemd/system/docker.service.d
+ 
+ touch override.conf
+ 
+ [Service]
+ ExecStart=
+ ExecStart=/usr/bin/dockerd
+```
+
+> systemctl daemon-reload
+
+> systemctl restart docker
+
+
 
