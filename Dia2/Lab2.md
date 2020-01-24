@@ -511,3 +511,54 @@ Para ver los logs de un pod en base a su label:
 CI Gitlab con Kubernetes
 ==========================
 
+### Configuracion de un Pipeline Gitlab
+
+Con gitlab tambien podemos manejar CI para un proyecto determinado, para ello, vamos a partir de lo
+siguiente
+
+1. Creamos un grupo de nombre: dev-ci y un proyecto de nombre: test-ci / public 
+2. Ahora, configuramos un "runner" que viene a ser el **medio** que usar gitlab para ejecutar todos los stages.( referencial )
+
+2.1 Ingresamos al contenedor de gitlab:
+> docker exec -it ID_CONTAINER bash 
+
+> wget https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb
+
+> apt-get update 
+
+> dpkg -i gitlab-runner_amd64.deb
+
+2.2 Reiniciamos el contenedor: 
+
+> docker restart ID_CONTAINER
+
+3. Dentro de nuestro proyecto, vamos a crear un archivo de nombre: .gitlab-ci.yml
+```
+stage:
+    - build
+    - test
+
+build:
+   stage: build
+   script:
+      - echo "Building"
+      - mkdir build 
+      - touch build/info.txt 
+   tags:
+      - build   
+
+test:
+   stage: test
+   script: 
+      - echo "Testing"
+      - test -f "build/info.txt"
+   tags:
+      - test    
+```
+
+
+gitlab centos7:
+https://www.vultr.com/docs/how-to-install-gitlab-community-edition-ce-11-x-on-centos-7
+
+gitlab-runner:
+curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh | sudo bash
