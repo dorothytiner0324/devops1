@@ -558,7 +558,7 @@ Reemplazar IP_SERVER_DOCKER por la ip publica del servidor o droplet o instancia
 
 > TOKEN: 53da99b3647d1c3b52fd4a3683d50533f3c48dba753ee8bfcedd0505110f29e1
 
-0.3 Con los datos ya obtenidos, en nuestro servidor Gitlab, vamos a configurar la conexion, para ello, hacemos clic en la "tuerca" 
+0.3 Con los datos ya obtenidos, en nuestro servidor Gitlab, vamos a configurar la conexion, para ello, hacemos clic en la **"tuerca" > kubernetes**
 
 ![cik8s](https://github.com/kdetony/devops/blob/master/Images/gitk8s.png "git-k8s")
 
