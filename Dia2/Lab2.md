@@ -516,23 +516,267 @@ CI Gitlab con Kubernetes
 Con gitlab tambien podemos manejar CI para un proyecto determinado, para ello, vamos a partir de lo
 siguiente
 
-1. Creamos un grupo de nombre: dev-ci y un proyecto de nombre: test-ci / public 
-2. Ahora, configuramos un "runner" que viene a ser el **medio** que usar gitlab para ejecutar todos los stages.( referencial )
+0. Vamos a ejecutar este **docker-compose.yml**
+```
+version: '3'
+services:
+  git:
+    container_name: git-server
+    hostname: IP_SERVER_DOCKER
+    ports:
+      - "443:443"
+      - "80:80"
+      - "4421:22"
+    volumes:
+      - "/home/deploy/gitlab/config:/etc/gitlab"
+      - "/home/deploy/gitlab/logs:/var/log/gitlab"
+      - "/home/deploy/gitlab/data:/var/opt/gitlab"
+    image: gitlab/gitlab-ce
+    restart: always
+    networks:
+      - net
+ 
+networks:
+  net:
 
-2.1 Ingresamos al contenedor de gitlab:
+```
+### OBS.
+
+Reemplazar IP_SERVER_DOCKER por la ip publica del servidor o droplet o instancia cloud.
+
+> docker-compose up -d
+
+0.1 Vamos a configurar ahora la conexion de Gitlab hacia nuestro cluster de kubernetes
+
+0.2 Realizamos ahora las sgts acciones:  ( las anotamos en un block de notas )
+
+> cat /root/.kube/config 
+
+> echo "CERTIFICATED" | base64 -d 
+
+> API URL: https://0cfd407b-9432-4b02-9fe0-4b292065c853.k8s.ondigitalocean.com
+
+> TOKEN: 53da99b3647d1c3b52fd4a3683d50533f3c48dba753ee8bfcedd0505110f29e1
+
+0.3 Con los datos ya obtenidos, en nuestro servidor Gitlab, vamos a configurar la conexion, para ello, hacemos clic en la "tuerca" 
+
+![cik8s](https://github.com/kdetony/devops/blob/master/Images/gitk8s.png "git-k8s")
+
+Escogemos la opcion: Agregar cluster kuebrentes
+```
+name: k8sdevops
+CERTIFICATED: el que ya tenemos almacenado
+URL API
+TOKEN
+```
+
+0.4 Instalamos como plugins: **Helm, Gitlab Runner**
+
+1. Creamos un grupo de nombre: dev-ci y un proyecto de nombre: test-ci / public 
+
+2. En nuestro repositorio, nos vamos a ubicar en el proyecto **test-ci** y nos ubicamos en **settings**
+
+![cik8s](https://github.com/kdetony/devops/blob/master/Images/gitk8s1.png "git-k8s")
+
+3. En este apartado vamos a configurar las variables de entorno que usaremos mas adelante, las cuales van a ser:
+```
+CI_REGISTRY_IMAGE : ID_DOCKER_HUB/testdevops
+
+CI_REGISTRY_PASSWORD : PASSWD_DOCKER_HUB
+ 
+CI_REGISTRY_USER : ID_DOCKER_HUB
+```
+
+4. En el proyecto, vamos a crear de 0 un simple codigo en php, solo para validar toda esta funcionalidad, la cual es aplicable si desearamos ejecutar un proyecto java, python, go, etc
+
+**CREATE FILE:  .gitlab-ci.yml**
+```
+docker-build:
+  # Official docker image.
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE":"$CI_COMMIT_SHA" .
+    - docker push "$CI_REGISTRY_IMAGE"
+  variables:
+    DOCKER_HOST: tcp://localhost:2375
+    DOCKER_TLS_CERTDIR: ""
+
+deploy:
+  stage: deploy
+  image: bitnami/kubectl
+  script:
+    - kubectl get deployment hola-php || kubectl create deployment hola-php --image="$CI_REGISTRY_IMAGE":"$CI_COMMIT_SHA"
+    - kubectl set image deployment/hola-php hola-php="$CI_REGISTRY_IMAGE":"$CI_COMMIT_SHA"
+```
+
+**CREATE FILE: Dockerfile**
+```
+FROM php:7.4.1-apache-buster
+
+COPY src/ /var/www/html
+
+EXPOSE 80
+
+```
+
+**CREATE DIRECTORY: src** + **CREATE FILE: index.php**
+```
+<?php
+echo "Hola deploy CI GITLAB";
+?>
+```
+## OBS.
+
+Antes de continuar, gitlab para poder ejecutar y tener completo acceso al namespace que sea ha creado: **gitlab-managed-apps**
+debemos darle estos accesos de privilegios de ejecuion ( RBAC )
+
+**clusterrole.yml**
+```
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: deployment-manager
+rules:
+- apiGroups: ["", "extensions", "apps"]
+  resources: ["deployments", "replicasets", "pods"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"] # You can also use ["*"]
+```  
+
+**clusterrolebinding.yaml**
+```
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: runner-gitlab-runner-deployments
+subjects:
+- kind: ServiceAccount
+  namespace: "gitlab-managed-apps"
+  name: "default"
+  apiGroup: ""
+roleRef:
+  kind: ClusterRole
+  name: "deployment-manager"
+  apiGroup: ""
+```
+
+Los ejecutamos 1 a 1: 
+
+> kubectl apply -f clusterrole.yml
+
+> kubectl apply -f clusterrolebinding.yaml
+
+5. Ahora, para ejecutar nuestro pipeline, nos ubicamos aqui: 
+
+![cik8s](https://github.com/kdetony/devops/blob/master/Images/gitk8s2.png "git-k8s")
+
+![cik8s](https://github.com/kdetony/devops/blob/master/Images/gitk8s3.png "git-k8s")
+
+6. Haccemos clic en ahora en **CI/CD > Jobs** para ver la ejecucion de nuestro pipeline :) 
+
+7. Si toda va bien, deberiamos ver la imagen creada en Dockerhub :) 
+
+8. Para validar que realmente se haya ejecutado nuestro pipeline, en el servidor Docker, donde tenemos instalado kubectl, vamos a ejecutar lo sgt: 
+
+> kubectl get ns 
+
+> kubectl -n gitlab-managed-apps get pods
+
+> kubectl -n gitlab-managed-apps get all
+
+La salida de esto, es visualizar nuestro pod ejecutandose :)  ...
+
+### OBS
+Si nuestro pod no se ha inicializado, debemos hacer un troubleshotting al mismo, para ello recurrimos a:
+
+> kubectl -n gitlab-managed-apps describe pod/hola-php-ID_POD
+
+### Pipeline Ejm. con mas stages
+
+0. Para este ejm. vamos a usar el siguiente **docker-compose.yml**
+```
+version: '3'
+services:
+  git:
+    container_name: git-server
+    hostname: 167.172.197.61
+    ports:
+      - "443:443"
+      - "80:80"
+      - "4421:22"
+    volumes:
+      - "/home/deploy/gitlab/config:/etc/gitlab"
+      - "/home/deploy/gitlab/logs:/var/log/gitlab"
+      - "/home/deploy/gitlab/data:/var/opt/gitlab"
+    image: gitlab/gitlab-ce
+    restart: always
+    networks:
+      - net
+ 
+  runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: git-runner
+    ports:
+      - "8093:8093"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/deploy/gitlab/runner-config:/etc/gitlab-runner
+    restart: always
+    networks:
+      - net   
+
+networks:
+  net:
+```
+
+Los ejecutamos:
+
+> docker-compose up -d 
+
+### OBS.
+
+Si nos muestra algun error, hacer el cambio de puertos y nombre del contenedor
+
+1. Ahora, configuramos un "runner" que viene a ser el **medio** que usar gitlab para ejecutar todos los stages.( referencial )
+
+2. Creamos el grupo: **simpleg** y el proyecto **simplet**
+
+3. Nos ubicamos en **settings > CI/CD** y vamos hacemos clic en **RUNNERS**
+
+4. Vamos a ingresar al contenedor **gitlab-runner** 
+
 > docker exec -it ID_CONTAINER bash 
 
-> wget https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb
+5. Dentro del contenedor vamos a ejecutar: 
 
-> apt-get update 
+> gitlab-runner register
 
-> dpkg -i gitlab-runner_amd64.deb
+6. Debemos ingresar estos datos: 
 
-2.2 Reiniciamos el contenedor: 
+> http//:IP_GITLAB
 
-> docker restart ID_CONTAINER
+> TOKEN
 
-3. Dentro de nuestro proyecto, vamos a crear un archivo de nombre: .gitlab-ci.yml
+> NAME : runner test
+
+> TAG: build,test,deploy
+
+> CONNECTOR: ssh 
+
+> IP_SERVER_DOCKER
+
+> PORT: 22
+
+> USER_ACCESS_SERVER: root
+
+> PASSWORD
+
+
+7. Dentro de nuestro proyecto, vamos a crear un archivo de nombre: **.gitlab-ci.yml**
 ```
 stage:
     - build
@@ -543,7 +787,7 @@ build:
    script:
       - echo "Building"
       - mkdir build 
-      - touch build/info.txt 
+      
    tags:
       - build   
 
@@ -551,14 +795,11 @@ test:
    stage: test
    script: 
       - echo "Testing"
-      - test -f "build/info.txt"
+      - echo "Test message" > build/info.txt
    tags:
       - test    
 ```
 
+8. Ejecutamos nuestro pipeline, para ello, nos ubicamos en **CI/CD > Pipelines > Run Pipeline**  
 
-gitlab centos7:
-https://www.vultr.com/docs/how-to-install-gitlab-community-edition-ce-11-x-on-centos-7
-
-gitlab-runner:
-curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh | sudo bash
+9. Si todo salio oka! debemos validar el resultado de la ejecucion de nuestro pipeline desde gitlab :-)
