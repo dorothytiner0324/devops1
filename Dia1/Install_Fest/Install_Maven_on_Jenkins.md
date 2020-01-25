@@ -16,7 +16,7 @@
 	
 1. Configuramos **M2_HOME** y **MAVEN_HOME** en **.bashrc**, esta configuracion puede ser para cualquier usuario ojo!, en nuestro caso usaremos root para esta configuración: 
    ```sh
-   vi ~/.bash_profile
+   vi ~/.bashrc
    JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-1.el8_0.x86_64
 
    M2_HOME=/opt/maven
