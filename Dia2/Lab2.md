@@ -240,6 +240,9 @@ Si queremos trabajar de forma "nativa" con el archivo kubeconfig.yaml realizamos
 * Listart Servicios:
   * kubectl get svc
   
+* Borrar un namespace:
+  * kubectl delete ns -n <namespace>
+ 
  **OBSERVACION**
  ```
  apiVersion: apps/v1, para k8s versiones antes 1.9.0 usar apps/v1beta2  
